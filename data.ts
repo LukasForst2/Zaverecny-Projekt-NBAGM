@@ -28,6 +28,7 @@ export interface PlayerData {
 }
 
 export const Player_catalog: PlayerData[] = [
+    //Guards (id: 1-10)
     {
         id: 1,
         type: PlayerType.Guard,
@@ -40,35 +41,9 @@ export const Player_catalog: PlayerData[] = [
         playmaking: 88,
         rebounding: 69,
         defense: 70
-    }
+    },
     {
         id: 2,
-        type: PlayerType.BigMan,
-        name: "Nikola",
-        surname: "Jokic",
-        salary: 55000000,
-        
-        scoring: 98,
-        shooting: 85,
-        playmaking: 99,
-        rebounding: 99,
-        defense: 75
-    }
-    {
-        id: 3,
-        type: PlayerType.Wing,
-        name: "LeBron",
-        surname: "James",
-        salary: 44000000,
-        
-        scoring: 88,
-        shooting: 89,
-        playmaking: 94,
-        rebounding: 82,
-        defense: 80
-    }
-    {
-        id: 4,
         type: PlayerType.Guard,
         name: "Steph",
         surname: "Curry",
@@ -79,10 +54,76 @@ export const Player_catalog: PlayerData[] = [
         playmaking: 92,
         rebounding: 69,
         defense: 70
-    }
+    },
+    {
+        id: 3,
+        type: PlayerType.Guard,
+        name: "LaMelo",
+        surname: "Ball",
+        salary: 40000000,
+        
+        scoring: 85,
+        shooting: 85,
+        playmaking: 96,
+        rebounding: 81,
+        defense: 78
+    },
+    {
+        id: 4,
+        type: PlayerType.Guard,
+        name: "Shai",
+        surname: "Gilgeous-Alexander",
+        salary: 67000000,
+        
+        scoring: 99,
+        shooting: 90,
+        playmaking: 87,
+        rebounding: 82,
+        defense: 86
+    },
     {
         id: 5,
         type: PlayerType.Guard,
+        name: "Luka",
+        surname: "Doncic",
+        salary: 46000000,
+        
+        scoring: 99,
+        shooting: 89,
+        playmaking: 97,
+        rebounding: 86,
+        defense: 70
+    },
+    {
+        id: ,
+        type: PlayerType.BigMan,
+        name: "Nikola",
+        surname: "Jokic",
+        salary: 55000000,
+        
+        scoring: 98,
+        shooting: 85,
+        playmaking: 99,
+        rebounding: 99,
+        defense: 75
+    },
+    {
+        id: ,
+        type: PlayerType.Wing,
+        name: "LeBron",
+        surname: "James",
+        salary: 44000000,
+        
+        scoring: 88,
+        shooting: 89,
+        playmaking: 94,
+        rebounding: 82,
+        defense: 80
+    },
+    
+    {
+        id: ,
+        type: PlayerType.Wing,
         name: "Peyton",
         surname: "Watson",
         salary: 3000000,
@@ -92,7 +133,7 @@ export const Player_catalog: PlayerData[] = [
         playmaking: 75,
         rebounding: 78,
         defense: 89
-    }
+    },
     {
         id: 6,
         type: PlayerType.Guard,
