@@ -1,0 +1,85 @@
+Scoring
+95–99 = MVP scorer, 28+ PPG, těžký střely, double-team pressure
+90–94 = jasná 1st option, 24–28 PPG
+85–89 = silná 2nd option, 20–24 PPG
+80–84 = dobrý scorer, 16–20 PPG
+75–79 = role scorer, 12–16 PPG
+70–74 = umí dát body, ale není hlavní zbraň
+<70 = scoring není jeho věc
+
+Shooting
+97–99 = Curry tier, elite % + insane volume + těžký střely
+94–96 = elite shooter, 40–44 % na 7+ pokusech
+90–93 = výborný shooter, 38–41 % na solid volume
+85–89 = dobrý shooter, 36–39 %
+80–84 = respektovaný shooter
+75–79 = average shooter
+70–74 = streaky / necháš ho střílet
+<70 = non-shooter
+
+Playmaking
+95–99 = generational passer, offense běží skrz něj
+90–94 = elite creator, hlavní playmaker
+85–89 = velmi dobrý playmaker
+80–84 = dobrý sekundární playmaker
+75–79 = umí přihrát, ale netvoří pořád
+70–74 = basic passing
+<70 = tunnel vision / netvoří pro ostatní
+
+Rebounding
+95–99 = elite rebounder, 12+ RPG
+90–94 = top rebounder, 10–12 RPG
+85–89 = výborný, 8–10 RPG
+80–84 = dobrý na svou pozici
+75–79 = solidní
+70–74 = okay
+<70 = slabý rebounder
+
+Defense
+95–99 = DPOY tier
+90–94 = elite defender
+85–89 = velmi dobrý defender
+80–84 = dobrý defender
+75–79 = průměr až solidní
+70–74 = není tragédie, ale není plus
+60–69 = slabina
+<60 = target v playoff
+
+10 guards:
+Murray
+Curry
+Ball
+Shai
+Luka
+Antman
+Cade
+D Mitch
+Brunson
+Maxey
+
+10 Wings:
+LeBron
+Pwat
+Miller
+Brown
+Giannis
+Randle
+Aaron Gordon
+Kawhi
+KD
+Scottie
+
+
+
+10 BigMan:
+Jokic
+Gobert
+Wemby
+Mobley
+Bam 
+Duren
+Sengun
+KAT
+Reid
+Embiid
+
