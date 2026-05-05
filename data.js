@@ -1,10 +1,13 @@
-export var PlayerType;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Player_catalog = exports.PlayerType = void 0;
+var PlayerType;
 (function (PlayerType) {
     PlayerType["Guard"] = "Guard";
     PlayerType["Wing"] = "Wing";
     PlayerType["BigMan"] = "BigMan";
-})(PlayerType || (PlayerType = {}));
-export const Player_catalog = [
+})(PlayerType || (exports.PlayerType = PlayerType = {}));
+exports.Player_catalog = [
     // Guards (id: 1-10)
     { id: 1, type: PlayerType.Guard, name: "Jamal", surname: "Murray", salary: 35000000, scoring: 89, shooting: 96, playmaking: 88, rebounding: 69, defense: 75 },
     { id: 2, type: PlayerType.Guard, name: "Steph", surname: "Curry", salary: 60000000, scoring: 94, shooting: 99, playmaking: 92, rebounding: 69, defense: 72 },
