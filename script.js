@@ -12,7 +12,7 @@ class Player {
         this._defense = data.defense;
         this._rebounding = data.rebounding;
     }
-    //ziskani celeho jmena a salary, hrac 
+    //ziskani celeho jmena a salary, hrace
     get fullName() {
         return `${this._name} ${this._surname}`;
     }
@@ -22,6 +22,7 @@ class Player {
 }
 /*Potomci hrace (guard, wing, bigman), budou si pocitat over all rating
     kazdy typ hrace ma jinou metodu na vypocet, kazdy skill se vynasobi multiplierem (podle vahy pro poizici), soucet multipliers = 1, aby overall byl do 100, :thumbs_up"
+    Rating tky zaokrouhlime na cele cisla pomoci math.round()
 */
 export class Guard extends Player {
     calcOverall() {
@@ -35,7 +36,8 @@ export class Guard extends Player {
 }
 export class Wing extends Player {
     calcOverall() {
-        return (this._shooting * 0.2) + (this._playmaking * 0.15) + (this._scoring * 0.25) + (this._defense * 0.3) + (this._rebounding * 0.1);
+        const rating = Math.round((this._shooting * 0.2) + (this._playmaking * 0.15) + (this._scoring * 0.25) + (this._defense * 0.3) + (this._rebounding * 0.1));
+        return rating;
         // u kridel na vsestrannosti
     }
     get position() {
@@ -44,7 +46,8 @@ export class Wing extends Player {
 }
 export class BigMan extends Player {
     calcOverall() {
-        return (this._shooting * 0.05) + (this._playmaking * 0.1) + (this._scoring * 0.15) + (this._defense * 0.3) + (this._rebounding * 0.4);
+        const rating = Math.round((this._shooting * 0.05) + (this._playmaking * 0.1) + (this._scoring * 0.15) + (this._defense * 0.3) + (this._rebounding * 0.4));
+        return rating;
         // doskoky, bloky
     }
     get position() {
@@ -70,3 +73,5 @@ activePlayers.forEach(player => {
     const rating = player.calcOverall();
     console.log(`${player.fullName} | Pozice: ${player.position} | Rating: ${rating} | Plat: $${(player.salary / 1000000)}M`);
 });
+console.log(`${activePlayers[0].salary} M`);
+console.log(`${activePlayers[14].fullName}`);

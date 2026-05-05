@@ -100,4 +100,6 @@ activePlayers.forEach(player => {
     console.log(`${player.fullName} | Pozice: ${player.position} | Rating: ${rating} | Plat: $${(player.salary / 1000000)}M`);
 });
 
-console.log(activePlayers[0
+console.log(`${activePlayers[0].salary} M`)
+
+console.log(`${activePlayers[14].fullName}`)
