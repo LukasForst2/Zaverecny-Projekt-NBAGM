@@ -1,6 +1,16 @@
 import { Player_catalog, PlayerType } from "./data.js";
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
 class Player {
+    _id;
+    _name;
+    _surname;
+    _salary;
+    //Protected, aby meli pristup k infu pro vypocet ratingu
+    _scoring;
+    _shooting;
+    _playmaking;
+    _defense;
+    _rebounding;
     constructor(data) {
         this._id = data.id;
         this._name = data.name;
@@ -75,3 +85,42 @@ activePlayers.forEach(player => {
 });
 console.log(`${activePlayers[0].salary} M`);
 console.log(`${activePlayers[14].fullName}`);
+//Trida pro sestaveni tymu
+export class Team {
+    _name;
+    _roster = []; // pole s hraci na tymu
+    _salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
+    constructor(name) {
+        this._name = name;
+    }
+    get name() {
+        return this._name;
+    }
+    addPlayer(player) {
+        const currentPay = this.getTotalSalary();
+        if (currentPay + player.salary > this._salaryCap) {
+            console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Plat překračuje limit pro výplaty!`);
+            return false;
+        }
+        this._roster.push(player);
+        return true;
+    }
+    getTotalSalary() {
+        return this._roster.reduce((sum, player) => sum + player.salary, 0);
+    }
+    getTeamRating() {
+        if (this._roster.length === 0)
+            return 0;
+        const totalRating = this._roster.reduce((sum, player) => sum + player.calcOverall(), 0);
+        const overallRating = totalRating / this._roster.length;
+        return overallRating;
+    }
+    printRoster() {
+        console.log(`\n--- TÝM: ${this._name.toUpperCase()} ---`);
+        this._roster.forEach(p => {
+            console.log(`- ${p.fullName} | Pozice: ${p.position} | OVR: ${p.calcOverall().toFixed(1)} | $${p.salary / 1000000}M`);
+        });
+        console.log(`Celkový plat: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
+        console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);
+    }
+}

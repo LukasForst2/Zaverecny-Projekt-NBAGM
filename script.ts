@@ -103,3 +103,49 @@ activePlayers.forEach(player => {
 console.log(`${activePlayers[0].salary} M`)
 
 console.log(`${activePlayers[14].fullName}`)
+
+//Trida pro sestaveni tymu
+export class Team {
+    private _name: string;
+    private _roster: Player[] = []; // pole s hraci na tymu
+    private readonly _salaryCap: number = 185000000 //cap 180M aby byla simulace balancovana, readonly aby nesel menit
+
+    constructor(name:string) {
+        this._name = name;
+    }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public addPlayer(player: Player): boolean {
+        const currentPay = this.getTotalSalary();
+        if (currentPay + player.salary > this._salaryCap) {
+            console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Plat překračuje limit pro výplaty!`);
+            return false;
+        }
+        this._roster.push(player);
+        return true;
+    }
+
+    public getTotalSalary():number {
+        return this._roster.reduce((sum,player) => sum + player.salary, 0 );
+    }
+
+    public getTeamRating(): number {
+        if (this._roster.length === 0) return 0;
+        
+        const totalRating = this._roster.reduce((sum, player) => sum + player.calcOverall(), 0)
+        const overallRating = totalRating / this._roster.length;
+        return overallRating;
+    }
+
+    public printRoster(): void { //vypiseme roster do konzole
+        console.log(`\n--- TÝM: ${this._name.toUpperCase()} ---`);
+        this._roster.forEach(p => {
+            console.log(`- ${p.fullName} | Pozice: ${p.position} | OVR: ${p.calcOverall().toFixed(1)} | $${p.salary / 1000000}M`);
+        });
+        console.log(`Celkový plat: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
+        console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);
+    }
+}
