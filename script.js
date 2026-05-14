@@ -77,19 +77,18 @@ const activePlayers = Player_catalog.map(data => {
             throw new Error("Neznámý typ hráče"); //ochrana pred bugem
     }
 });
-//test v konzoli, vyjede tabulka s ratingy
-console.log("--- NBA GM SIMULATOR: ANALÝZA TRHU ---");
+/*test v konzoli, vyjede tabulka s ratingy
+console.log("--- Seznam hracu na trhu ---");
+
 activePlayers.forEach(player => {
     const rating = player.calcOverall();
     console.log(`${player.fullName} | Pozice: ${player.position} | Rating: ${rating} | Plat: $${(player.salary / 1000000)}M`);
-});
-console.log(`${activePlayers[0].salary} M`);
-console.log(`${activePlayers[14].fullName}`);
+});*/
 //Trida pro sestaveni tymu
 export class Team {
     _name;
     _roster = []; // pole s hraci na tymu
-    _salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
+    _salaryCap = 9185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
     constructor(name) {
         this._name = name;
     }
@@ -124,3 +123,40 @@ export class Team {
         console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);
     }
 }
+//vytvoreni dvou tymu na test v konzoli, dobrou noc
+/**/
+const teamA = new Team("Kutná Hora");
+const teamB = new Team("Prágl");
+const jokic = activePlayers.find(p => p.fullName === "Nikola Jokic");
+const murray = activePlayers.find(p => p.fullName === "Jamal Murray");
+const ag = activePlayers.find(p => p.fullName === "Aaron Gordon");
+const miller = activePlayers.find(p => p.fullName === "Brandon Miller");
+const cade = activePlayers.find(p => p.fullName === "Cade Cunningham");
+const luka = activePlayers.find(p => p.fullName === "Luka Doncic");
+const sga = activePlayers.find(p => p.fullName === "Shai Gilgeous-Alexander");
+const brown = activePlayers.find(p => p.fullName === "Jaylen Brown");
+const pwat = activePlayers.find(p => p.fullName === "Peyton Watson");
+const embiid = activePlayers.find(p => p.fullName === "Joel Embiid");
+if (jokic)
+    teamA.addPlayer(jokic);
+if (murray)
+    teamA.addPlayer(murray);
+if (ag)
+    teamA.addPlayer(ag);
+if (miller)
+    teamA.addPlayer(miller);
+if (cade)
+    teamA.addPlayer(cade);
+if (luka)
+    teamA.addPlayer(luka);
+if (sga)
+    teamA.addPlayer(sga);
+if (brown)
+    teamA.addPlayer(brown);
+if (pwat)
+    teamA.addPlayer(pwat);
+if (embiid)
+    teamA.addPlayer(embiid);
+console.log(`Tým ${teamA.name}`);
+teamA.printRoster;
+console.log(`Tým ${teamB.name}`);
