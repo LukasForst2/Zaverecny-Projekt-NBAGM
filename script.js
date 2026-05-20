@@ -120,12 +120,12 @@ const jokic = activePlayers.find(p => p.fullName === "Nikola Jokic");
 const murray = activePlayers.find(p => p.fullName === "Jamal Murray");
 const ag = activePlayers.find(p => p.fullName === "Aaron Gordon");
 const miller = activePlayers.find(p => p.fullName === "Brandon Miller");
-const cade = activePlayers.find(p => p.fullName === "Cade Cunningham");
+const cade = activePlayers.find(p => p.fullName === "Kyle Lowry");
 const luka = activePlayers.find(p => p.fullName === "Luka Doncic");
 const maxey = activePlayers.find(p => p.fullName === "Tyrese Maxey");
 const barnes = activePlayers.find(p => p.fullName === "Scottie Barnes");
 const pwat = activePlayers.find(p => p.fullName === "Peyton Watson");
-const gobert = activePlayers.find(p => p.fullName === "Rudy Gobert");
+const gobert = activePlayers.find(p => p.fullName === "Isaiah Stewart");
 if (jokic)
     teamA.addPlayer(jokic);
 if (murray)
