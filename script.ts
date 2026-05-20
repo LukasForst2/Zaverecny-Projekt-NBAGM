@@ -103,8 +103,8 @@ activePlayers.forEach(player => {
 //Trida pro sestaveni tymu
 export class Team {
     private _name: string;
-    private _roster: Player[] = []; // pole s hraci na tymu
-    private readonly _salaryCap: number = 9185000000 //cap 180M aby byla simulace balancovana, readonly aby nesel menit
+    public _roster: Player[] = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
+    private readonly _salaryCap: number = 185000000 //cap 180M aby byla simulace balancovana, readonly aby nesel menit
 
     constructor(name:string) {
         this._name = name;
@@ -159,22 +159,51 @@ const miller = activePlayers.find(p => p.fullName === "Brandon Miller");
 const cade = activePlayers.find(p => p.fullName === "Cade Cunningham");
 
 const luka = activePlayers.find(p => p.fullName === "Luka Doncic");
-const sga = activePlayers.find(p => p.fullName === "Shai Gilgeous-Alexander");
-const brown = activePlayers.find(p => p.fullName === "Jaylen Brown");
+const maxey = activePlayers.find(p => p.fullName === "Tyrese Maxey");
+const barnes = activePlayers.find(p => p.fullName === "Scottie Barnes");
 const pwat = activePlayers.find(p => p.fullName === "Peyton Watson");
-const embiid = activePlayers.find(p => p.fullName === "Joel Embiid");
+const gobert = activePlayers.find(p => p.fullName === "Rudy Gobert");
 
 if (jokic) teamA.addPlayer(jokic);
 if (murray) teamA.addPlayer(murray);
 if (ag) teamA.addPlayer(ag);
 if (miller) teamA.addPlayer(miller);
 if (cade) teamA.addPlayer(cade);
-if (luka) teamA.addPlayer(luka);
-if (sga) teamA.addPlayer(sga);
-if (brown) teamA.addPlayer(brown);
-if (pwat) teamA.addPlayer(pwat);
-if (embiid) teamA.addPlayer(embiid);
 
-console.log(`Tým ${teamA.name}`);
-teamA.printRoster;
-console.log(`Tým ${teamB.name}`);
+if (luka) teamB.addPlayer(luka);
+if (maxey) teamB.addPlayer(maxey);
+if (barnes) teamB.addPlayer(barnes);
+if (pwat) teamB.addPlayer(pwat);
+if (gobert) teamB.addPlayer(gobert);
+
+teamA.printRoster();
+teamB.printRoster();
+
+//Algoritmus vypoctu zapasu
+function simulateMatch(homeTeam: Team, awayTeam: Team): void {
+
+    console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name}===`);
+
+    if (homeTeam._roster.length !== 5 || awayTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
+        console.log("Jeden z týmů nemá plný počet hráčů. Zápas nelze odehrát.");
+        return;
+    }
+
+    const homeScore = homeTeam.getTeamRating() + (Math.random() * 10 - 5);
+    const awayScore = awayTeam.getTeamRating() + (Math.random() * 10 - 5);
+
+    console.log(`Skóre domácího týmu: ${homeScore}`);
+    console.log(`Skóre týmu hostú: ${awayScore}`);
+
+    if (homeScore > awayScore) {
+        console.log(`Vítězný tým: ${homeTeam.name}`);
+    }
+    else if (awayScore > homeScore) {
+        console.log(`Vítězný tým: ${awayTeam.name}`);
+    }
+    else {
+        console.log("Remíza");
+    }
+
+}
+simulateMatch(teamA,teamB);
