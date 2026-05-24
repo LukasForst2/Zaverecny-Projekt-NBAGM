@@ -19,6 +19,12 @@ class Player {
     get salary() {
         return this._salary;
     }
+    // ziskani statistik kvuli lepsimu algoritmu na vypocet vysledku zapasu
+    get scoring() { return this._scoring; }
+    get shooting() { return this._shooting; }
+    get playmaking() { return this._playmaking; }
+    get defense() { return this._defense; }
+    get rebounding() { return this._rebounding; }
 }
 /*Potomci hrace (guard, wing, bigman), budou si pocitat over all rating
     kazdy typ hrace ma jinou metodu na vypocet, kazdy skill se vynasobi multiplierem (podle vahy pro poizici), soucet multipliers = 1, aby overall byl do 100, :thumbs_up"
@@ -103,6 +109,26 @@ export class Team {
         const overallRating = totalRating / this._roster.length;
         return overallRating;
     }
+    getCategoryStats() {
+        if (this._roster.length === 0)
+            return { scoring: 0, shooting: 0, playmaking: 0, defense: 0, rebounding: 0 };
+        let scoring = 0, shooting = 0, playmaking = 0, defense = 0, rebounding = 0;
+        this._roster.forEach(p => {
+            scoring += p.scoring;
+            shooting += p.shooting;
+            playmaking += p.playmaking;
+            defense += p.defense;
+            rebounding += p.rebounding;
+        });
+        const count = this._roster.length;
+        return {
+            scoring: scoring / count,
+            shooting: shooting / count,
+            playmaking: playmaking / count,
+            defense: defense / count,
+            rebounding: rebounding / count
+        };
+    }
     printRoster() {
         console.log(`\n--- TÝM: ${this._name.toUpperCase()} ---`);
         this._roster.forEach(p => {
@@ -110,6 +136,29 @@ export class Team {
         });
         console.log(`Celkový plat: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
         console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);
+    }
+    printWeaknesses() {
+        const stats = this.getCategoryStats();
+        const weaknesses = [];
+        // Hranice pro slabinu nastavíme na 75 bodů
+        const hranice = 80;
+        if (stats.defense < hranice)
+            weaknesses.push(`Děravá obrana (pod ${hranice})`);
+        if (stats.shooting < hranice)
+            weaknesses.push(`Špatný spacing/střelba (pod ${hranice})`);
+        if (stats.rebounding < hranice)
+            weaknesses.push(`Problém na doskoku (pod ${hranice})`);
+        if (stats.playmaking < hranice)
+            weaknesses.push(`Chybí tvůrce hry (pod ${hranice})`);
+        if (stats.scoring < hranice)
+            weaknesses.push(`Slabá ofenzíva (pod ${hranice})`);
+        console.log(`\n--- SKAUTING REPORT: ${this._name} ---`);
+        if (weaknesses.length > 0) {
+            console.log(`Slabiny týmu: ${weaknesses.join(", ")}`);
+        }
+        else {
+            console.log(`Tým je skvěle vyvážený, nemá žádnou výraznou slabinu.`);
+        }
     }
 }
 //vytvoreni dvou tymu na test v konzoli, dobrou noc
@@ -148,17 +197,22 @@ if (gobert)
     teamB.addPlayer(gobert);
 teamA.printRoster();
 teamB.printRoster();
-//Algoritmus vypoctu zapasu
-function simulateMatch(homeTeam, awayTeam) {
+/*Algoritmus vypoctu zapasu, pouzijeme porovnani jednotlivych statistik tymu, kdo vyhraje vice kategorii, vyhraje zapas
+function simulateMatch(homeTeam: Team, awayTeam: Team): void {
+
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name}===`);
+
     if (homeTeam._roster.length !== 5 || awayTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
         console.log("Jeden z týmů nemá plný počet hráčů. Zápas nelze odehrát.");
         return;
     }
+
     const homeScore = homeTeam.getTeamRating() + (Math.random() * 10 - 5);
     const awayScore = awayTeam.getTeamRating() + (Math.random() * 10 - 5);
+
     console.log(`Skóre domácího týmu: ${homeScore}`);
     console.log(`Skóre týmu hostú: ${awayScore}`);
+
     if (homeScore > awayScore) {
         console.log(`Vítězný tým: ${homeTeam.name}`);
     }
@@ -168,5 +222,80 @@ function simulateMatch(homeTeam, awayTeam) {
     else {
         console.log("Remíza");
     }
+
 }
-simulateMatch(teamA, teamB);
+simulateMatch(teamA,teamB); */
+function simulateAdvancedMatch(homeTeam, awayTeam) {
+    console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
+    const home = homeTeam.getCategoryStats();
+    const away = awayTeam.getCategoryStats();
+    let homeMatchupPoints = 0;
+    let awayMatchupPoints = 0;
+    console.log("\n--- HEAD-TO-HEAD MATCHUPS ---");
+    // 1. Domácí útok vs Obrana hostů
+    const homeOffense = (home.scoring + home.shooting) / 2;
+    console.log(`Útok ${homeTeam.name} (${homeOffense.toFixed(1)}) vs Obrana ${awayTeam.name} (${away.defense.toFixed(1)})`);
+    if (homeOffense > away.defense) {
+        homeMatchupPoints++;
+        console.log(" -> Bod pro domácí ofenzívu!");
+    }
+    else {
+        awayMatchupPoints++;
+        console.log(" -> Bod pro obranu hostů!");
+    }
+    // 2. Útok hostů vs Obrana domácích
+    const awayOffense = (away.scoring + away.shooting) / 2;
+    console.log(`Útok ${awayTeam.name} (${awayOffense.toFixed(1)}) vs Obrana ${homeTeam.name} (${home.defense.toFixed(1)})`);
+    if (awayOffense > home.defense) {
+        awayMatchupPoints++;
+        console.log(" -> Bod pro ofenzívu hostů!");
+    }
+    else {
+        homeMatchupPoints++;
+        console.log(" -> Bod pro domácí obranu!");
+    }
+    // 3. Playmaking duel
+    console.log(`Tvorba hry: ${home.playmaking.toFixed(1)} vs ${away.playmaking.toFixed(1)}`);
+    if (home.playmaking > away.playmaking) {
+        homeMatchupPoints++;
+        console.log(` -> ${homeTeam.name} má lepší pohyb míče!`);
+    }
+    else {
+        awayMatchupPoints++;
+        console.log(` -> ${awayTeam.name} má lepší pohyb míče!`);
+    }
+    // 4. Souboj pod košem (Doskoky)
+    console.log(`Souboj pod košem (Rebounds): ${home.rebounding.toFixed(1)} vs ${away.rebounding.toFixed(1)}`);
+    if (home.rebounding > away.rebounding) {
+        homeMatchupPoints++;
+        console.log(` -> ${homeTeam.name} vládne na doskoku!`);
+    }
+    else {
+        awayMatchupPoints++;
+        console.log(` -> ${awayTeam.name} vládne na doskoku!`);
+    }
+    // VYHODNOCENÍ VÝSLEDKU
+    console.log("\n--- VÝSLEDEK ---");
+    if (homeMatchupPoints > awayMatchupPoints) {
+        console.log(`🏆 Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
+    }
+    else if (awayMatchupPoints > homeMatchupPoints) {
+        console.log(`🏆 Vítězí tým: ${awayTeam.name} (Skóre matchupů: ${awayMatchupPoints} : ${homeMatchupPoints})`);
+    }
+    else {
+        // Pokud je remíza na matchupy, rozhoduje celkový rating + štěstí
+        console.log("Remíza v matchupech! Rozhoduje celková síla a štěstí v koncovce...");
+        const homeOvr = homeTeam.getTeamRating() + (Math.random() * 2);
+        const awayOvr = awayTeam.getTeamRating() + (Math.random() * 2);
+        if (homeOvr > awayOvr) {
+            console.log(`🏆 V těsné koncovce vítězí tým: ${homeTeam.name}!`);
+        }
+        else {
+            console.log(`🏆 V těsné koncovce vítězí tým: ${awayTeam.name}!`);
+        }
+    }
+}
+// Spuštění
+simulateAdvancedMatch(teamA, teamB);
+teamA.printWeaknesses();
+teamB.printWeaknesses();
