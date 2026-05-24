@@ -179,8 +179,7 @@ if (jokic)
     teamA.addPlayer(jokic);
 if (murray)
     teamA.addPlayer(murray);
-if (ag)
-    teamA.addPlayer(ag);
+//if (ag) teamA.addPlayer(ag);
 if (miller)
     teamA.addPlayer(miller);
 if (cade)
@@ -191,12 +190,11 @@ if (maxey)
     teamB.addPlayer(maxey);
 if (barnes)
     teamB.addPlayer(barnes);
-if (pwat)
-    teamB.addPlayer(pwat);
+//if (pwat) teamB.addPlayer(pwat);
 if (gobert)
     teamB.addPlayer(gobert);
-teamA.printRoster();
-teamB.printRoster();
+/*teamA.printRoster();
+teamB.printRoster(); */
 /*Algoritmus vypoctu zapasu, pouzijeme porovnani jednotlivych statistik tymu, kdo vyhraje vice kategorii, vyhraje zapas
 function simulateMatch(homeTeam: Team, awayTeam: Team): void {
 
@@ -227,6 +225,14 @@ function simulateMatch(homeTeam: Team, awayTeam: Team): void {
 simulateMatch(teamA,teamB); */
 function simulateAdvancedMatch(homeTeam, awayTeam) {
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
+    if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
+        console.log(`Tým ${homeTeam.name} nemá plný počet hráčů. Zápas nelze odehrát.`);
+        return;
+    }
+    if (awayTeam._roster.length !== 5) {
+        console.log(`Tým ${awayTeam.name} nemá plný počet hráčů. Zápas nelze odehrát.`);
+        return;
+    }
     const home = homeTeam.getCategoryStats();
     const away = awayTeam.getCategoryStats();
     let homeMatchupPoints = 0;
@@ -297,5 +303,3 @@ function simulateAdvancedMatch(homeTeam, awayTeam) {
 }
 // Spuštění
 simulateAdvancedMatch(teamA, teamB);
-teamA.printWeaknesses();
-teamB.printWeaknesses();
