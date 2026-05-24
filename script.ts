@@ -18,6 +18,8 @@ abstract class Player {
     public abstract get position(): string;
 
     constructor(data: PlayerData) {
+        if (data.salary < 0) throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
+        
         this._id = data.id;
         this._name = data.name;
         this._surname = data.surname;
