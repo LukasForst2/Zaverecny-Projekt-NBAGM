@@ -198,7 +198,7 @@ export class Team {
 }
 
 //vytvoreni dvou tymu na test v konzoli, dobrou noc
-/**/ 
+/*
 const teamA = new Team("Kutná Hora");
 const teamB = new Team("Prágl");
 
@@ -225,40 +225,8 @@ if (maxey) teamB.addPlayer(maxey);
 if (barnes) teamB.addPlayer(barnes);
 //if (pwat) teamB.addPlayer(pwat);
 if (gobert) teamB.addPlayer(gobert);
-
-/*teamA.printRoster();
-teamB.printRoster(); */
-
-/*Algoritmus vypoctu zapasu, pouzijeme porovnani jednotlivych statistik tymu, kdo vyhraje vice kategorii, vyhraje zapas
+*/ 
 function simulateMatch(homeTeam: Team, awayTeam: Team): void {
-
-    console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name}===`);
-
-    if (homeTeam._roster.length !== 5 || awayTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
-        console.log("Jeden z týmů nemá plný počet hráčů. Zápas nelze odehrát.");
-        return;
-    }
-
-    const homeScore = homeTeam.getTeamRating() + (Math.random() * 10 - 5);
-    const awayScore = awayTeam.getTeamRating() + (Math.random() * 10 - 5);
-
-    console.log(`Skóre domácího týmu: ${homeScore}`);
-    console.log(`Skóre týmu hostú: ${awayScore}`);
-
-    if (homeScore > awayScore) {
-        console.log(`Vítězný tým: ${homeTeam.name}`);
-    }
-    else if (awayScore > homeScore) {
-        console.log(`Vítězný tým: ${awayTeam.name}`);
-    }
-    else {
-        console.log("Remíza");
-    }
-
-}
-simulateMatch(teamA,teamB); */
-
-function simulateAdvancedMatch(homeTeam: Team, awayTeam: Team): void {
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
 
     if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
@@ -319,6 +287,3 @@ function simulateAdvancedMatch(homeTeam: Team, awayTeam: Team): void {
         }
     }
 }
-
-// Spuštění
-simulateAdvancedMatch(teamA, teamB);
