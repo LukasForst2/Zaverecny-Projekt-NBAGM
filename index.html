@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="imgs/basketball.ico">
-    <title>GM Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>NBA Simulator</title>
 </head>
 <body>
+    <div id="app">
+        <header class="header">
+            <div class="search-bar">
+                <input type="text" id="searchInp" placeholder="Zadejte jméno hráče...">
+            </div>
+            <div class="filters">
+                <label for=""><input type="checkbox" id="filterGuard" checked>Guard</label>
+                <label for=""><input type="checkbox" id="filterWing" checked>Wing</label>
+                <label for=""><input type="checkbox" id="filterBig" checked>Big</label>
+            </div>
+        </header>
+
+    <main class="matchup">
+        <section class="team-column" id="teamA">
+            <h2 class="team-header" id="teamAheader"></h2>
+            <div class="roster-chart" id="teamAchart">
+                <div class="slot empty">Volný slot</div>
+                <div class="slot empty">Volný slot</div>
+                <div class="slot empty">Volný slot</div>
+                <div class="slot empty">Volný slot</div>
+                <div class="slot empty">Volný slot</div>
+            </div>
+            <div class="team-stats" id="teamAstats">
+                <p id="teamAcap"></p>
+                <p id="teamAscoring"></p>
+                <p id="teamAshooting"></p>
+                <p id="teamAplaymaking"></p>
+                <p id="teamAdefense"></p>
+                <p id="teamArebounding"></p>
+                <p id="teamAoverall"></p>
+            </div>
+        </section>
+    </main>
+
+    </div>
     <script type="module" src="script.js"></script>
 </body>
 </html>
