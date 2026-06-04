@@ -271,19 +271,71 @@ function simulateMatch(homeTeam: Team, awayTeam: Team): void {
     // VYHODNOCENÍ VÝSLEDKU
     console.log("\n--- VÝSLEDEK ---");
     if (homeMatchupPoints > awayMatchupPoints) {
-        console.log(`🏆 Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
+        console.log(`Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
     } else if (awayMatchupPoints > homeMatchupPoints) {
-        console.log(`🏆 Vítězí tým: ${awayTeam.name} (Skóre matchupů: ${awayMatchupPoints} : ${homeMatchupPoints})`);
+        console.log(`Vítězí tým: ${awayTeam.name} (Skóre matchupů: ${awayMatchupPoints} : ${homeMatchupPoints})`);
     } else {
         // Pokud je remíza na matchupy, rozhoduje celkový rating + štěstí
-        console.log("Remíza v matchupech! Rozhoduje celková síla a štěstí v koncovce...");
+        console.log("Remíza v matchupech!");
         const homeOvr = homeTeam.getTeamRating() + (Math.random() * 2);
         const awayOvr = awayTeam.getTeamRating() + (Math.random() * 2);
         
         if (homeOvr > awayOvr) {
-            console.log(`🏆 V těsné koncovce vítězí tým: ${homeTeam.name}!`);
+            console.log(`V těsné koncovce vítězí tým: ${homeTeam.name}!`);
         } else {
-            console.log(`🏆 V těsné koncovce vítězí tým: ${awayTeam.name}!`);
+            console.log(`V těsné koncovce vítězí tým: ${awayTeam.name}!`);
         }
     }
 }
+
+//UI + HTML propojeni
+
+//ziskani elementu
+const searchInp = document.getElementById("searchInp") as HTMLInputElement;
+const searchRes = document.getElementById("searchRes") as HTMLDivElement;
+
+const filterGuard = document.getElementById("filterGuard") as HTMLInputElement;
+const filterWing = document.getElementById("filterWing") as HTMLInputElement;
+const filterBig = document.getElementById("filterBig") as HTMLInputElement;
+
+//hl funkce
+function updateSearchBar() {
+    //prevzani inputu
+    const userInp = searchInp.value.toLowerCase().trim();
+
+    //checkbox check
+    const showGuards = filterGuard.checked;
+    const showWings = filterWing.checked;
+    const showBigs = filterBig.checked;
+
+    if (userInp.length === 0) {
+        searchRes.innerHTML = "";
+        searchRes.style.display = "none";
+        return;
+    }
+    
+    const filteredPlayers = activePlayers.filter(p => {
+    //hledame shodu v jmene
+    const matchesName = p.fullName.toLowerCase().includes(userInp);
+    
+        let matchesType = false;
+        if (p.position === "Guard" && showGuards) matchesType = true;
+        if (p.position === "Wing" && showWings) matchesType = true;
+        if (p.position === "BigMan" && showBigs) matchesType = true;
+
+        return matchesName && matchesType;
+    })
+
+    searchRes.innerHTML = "";
+
+    if (filteredPlayers.length >0) {
+        searchRes.style.display = "block";
+
+        filteredPlayers.forEach( p => {
+            const item = document.createElement("div");
+            item.classList.add("suggestion-item");
+            item.textContent = `${p.fullName} | ${p.position} | OVR: ${p.calcOverall().toFixed(0)}`
+        })
+    }
+}
+
