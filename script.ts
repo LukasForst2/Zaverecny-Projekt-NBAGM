@@ -334,8 +334,19 @@ function updateSearchBar() {
         filteredPlayers.forEach( p => {
             const item = document.createElement("div");
             item.classList.add("suggestion-item");
-            item.textContent = `${p.fullName} | ${p.position} | OVR: ${p.calcOverall().toFixed(0)}`
+            item.textContent = `${p.fullName} | ${p.position} | OVR: ${p.calcOverall().toFixed(0)} | SCR: ${p.scoring} | SHT: ${p.shooting} | REB: ${p.rebounding} | PLM: ${p.playmaking} | DEF: ${p.defense}`
+
+            item.addEventListener("click", () => {
+                console.log(`Kliknul jsi na hráče: ${p.fullName}.`);
+                searchInp.value = ""; 
+                searchRes.style.display = "none";
+            })
         })
     }
 }
 
+searchInp.addEventListener("change", updateSearchBar);
+
+filterGuard.addEventListener("change", updateSearchBar);
+filterWing.addEventListener("change", updateSearchBar);
+filterBig.addEventListener("change", updateSearchBar);

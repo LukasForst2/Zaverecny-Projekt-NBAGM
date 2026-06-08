@@ -1,6 +1,16 @@
 import { Player_catalog, PlayerType } from "./data.js";
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
 class Player {
+    _id;
+    _name;
+    _surname;
+    _salary;
+    //Protected, aby meli pristup k infu pro vypocet ratingu
+    _scoring;
+    _shooting;
+    _playmaking;
+    _defense;
+    _rebounding;
     constructor(data) {
         if (data.salary < 0)
             throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
@@ -84,9 +94,10 @@ activePlayers.forEach(player => {
 });*/
 //Trida pro sestaveni tymu
 export class Team {
+    _name;
+    _roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
+    _salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
     constructor(name) {
-        this._roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
-        this._salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
         this._name = name;
     }
     get name() {
@@ -164,68 +175,35 @@ export class Team {
     }
 }
 //vytvoreni dvou tymu na test v konzoli, dobrou noc
-/**/
+/*
 const teamA = new Team("Kutná Hora");
 const teamB = new Team("Prágl");
+
 const jokic = activePlayers.find(p => p.fullName === "Nikola Jokic");
 const murray = activePlayers.find(p => p.fullName === "Jamal Murray");
 const ag = activePlayers.find(p => p.fullName === "Aaron Gordon");
 const miller = activePlayers.find(p => p.fullName === "Brandon Miller");
 const cade = activePlayers.find(p => p.fullName === "Kyle Lowry");
+
 const luka = activePlayers.find(p => p.fullName === "Luka Doncic");
 const maxey = activePlayers.find(p => p.fullName === "Tyrese Maxey");
 const barnes = activePlayers.find(p => p.fullName === "Scottie Barnes");
 const pwat = activePlayers.find(p => p.fullName === "Peyton Watson");
 const gobert = activePlayers.find(p => p.fullName === "Isaiah Stewart");
-if (jokic)
-    teamA.addPlayer(jokic);
-if (murray)
-    teamA.addPlayer(murray);
+
+if (jokic) teamA.addPlayer(jokic);
+if (murray) teamA.addPlayer(murray);
 //if (ag) teamA.addPlayer(ag);
-if (miller)
-    teamA.addPlayer(miller);
-if (cade)
-    teamA.addPlayer(cade);
-if (luka)
-    teamB.addPlayer(luka);
-if (maxey)
-    teamB.addPlayer(maxey);
-if (barnes)
-    teamB.addPlayer(barnes);
+if (miller) teamA.addPlayer(miller);
+if (cade) teamA.addPlayer(cade);
+
+if (luka) teamB.addPlayer(luka);
+if (maxey) teamB.addPlayer(maxey);
+if (barnes) teamB.addPlayer(barnes);
 //if (pwat) teamB.addPlayer(pwat);
-if (gobert)
-    teamB.addPlayer(gobert);
-/*teamA.printRoster();
-teamB.printRoster(); */
-/*Algoritmus vypoctu zapasu, pouzijeme porovnani jednotlivych statistik tymu, kdo vyhraje vice kategorii, vyhraje zapas
-function simulateMatch(homeTeam: Team, awayTeam: Team): void {
-
-    console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name}===`);
-
-    if (homeTeam._roster.length !== 5 || awayTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
-        console.log("Jeden z týmů nemá plný počet hráčů. Zápas nelze odehrát.");
-        return;
-    }
-
-    const homeScore = homeTeam.getTeamRating() + (Math.random() * 10 - 5);
-    const awayScore = awayTeam.getTeamRating() + (Math.random() * 10 - 5);
-
-    console.log(`Skóre domácího týmu: ${homeScore}`);
-    console.log(`Skóre týmu hostú: ${awayScore}`);
-
-    if (homeScore > awayScore) {
-        console.log(`Vítězný tým: ${homeTeam.name}`);
-    }
-    else if (awayScore > homeScore) {
-        console.log(`Vítězný tým: ${awayTeam.name}`);
-    }
-    else {
-        console.log("Remíza");
-    }
-
-}
-simulateMatch(teamA,teamB); */
-function simulateAdvancedMatch(homeTeam, awayTeam) {
+if (gobert) teamB.addPlayer(gobert);
+*/
+function simulateMatch(homeTeam, awayTeam) {
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
     if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
         console.log(`Tým ${homeTeam.name} nemá plný počet hráčů. Zápas nelze odehrát.`);
@@ -285,23 +263,72 @@ function simulateAdvancedMatch(homeTeam, awayTeam) {
     // VYHODNOCENÍ VÝSLEDKU
     console.log("\n--- VÝSLEDEK ---");
     if (homeMatchupPoints > awayMatchupPoints) {
-        console.log(`🏆 Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
+        console.log(`Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
     }
     else if (awayMatchupPoints > homeMatchupPoints) {
-        console.log(`🏆 Vítězí tým: ${awayTeam.name} (Skóre matchupů: ${awayMatchupPoints} : ${homeMatchupPoints})`);
+        console.log(`Vítězí tým: ${awayTeam.name} (Skóre matchupů: ${awayMatchupPoints} : ${homeMatchupPoints})`);
     }
     else {
         // Pokud je remíza na matchupy, rozhoduje celkový rating + štěstí
-        console.log("Remíza v matchupech! Rozhoduje celková síla a štěstí v koncovce...");
+        console.log("Remíza v matchupech!");
         const homeOvr = homeTeam.getTeamRating() + (Math.random() * 2);
         const awayOvr = awayTeam.getTeamRating() + (Math.random() * 2);
         if (homeOvr > awayOvr) {
-            console.log(`🏆 V těsné koncovce vítězí tým: ${homeTeam.name}!`);
+            console.log(`V těsné koncovce vítězí tým: ${homeTeam.name}!`);
         }
         else {
-            console.log(`🏆 V těsné koncovce vítězí tým: ${awayTeam.name}!`);
+            console.log(`V těsné koncovce vítězí tým: ${awayTeam.name}!`);
         }
     }
 }
-// Spuštění
-simulateAdvancedMatch(teamA, teamB);
+//UI + HTML propojeni
+//ziskani elementu
+const searchInp = document.getElementById("searchInp");
+const searchRes = document.getElementById("searchRes");
+const filterGuard = document.getElementById("filterGuard");
+const filterWing = document.getElementById("filterWing");
+const filterBig = document.getElementById("filterBig");
+//hl funkce
+function updateSearchBar() {
+    //prevzani inputu
+    const userInp = searchInp.value.toLowerCase().trim();
+    //checkbox check
+    const showGuards = filterGuard.checked;
+    const showWings = filterWing.checked;
+    const showBigs = filterBig.checked;
+    if (userInp.length === 0) {
+        searchRes.innerHTML = "";
+        searchRes.style.display = "none";
+        return;
+    }
+    const filteredPlayers = activePlayers.filter(p => {
+        //hledame shodu v jmene
+        const matchesName = p.fullName.toLowerCase().includes(userInp);
+        let matchesType = false;
+        if (p.position === "Guard" && showGuards)
+            matchesType = true;
+        if (p.position === "Wing" && showWings)
+            matchesType = true;
+        if (p.position === "BigMan" && showBigs)
+            matchesType = true;
+        return matchesName && matchesType;
+    });
+    searchRes.innerHTML = "";
+    if (filteredPlayers.length > 0) {
+        searchRes.style.display = "block";
+        filteredPlayers.forEach(p => {
+            const item = document.createElement("div");
+            item.classList.add("suggestion-item");
+            item.textContent = `${p.fullName} | ${p.position} | OVR: ${p.calcOverall().toFixed(0)} | SCR: ${p.scoring} | SHT: ${p.shooting} | REB: ${p.rebounding} | PLM: ${p.playmaking} | DEF: ${p.defense}`;
+            item.addEventListener("click", () => {
+                console.log(`Kliknul jsi na hráče: ${p.fullName}.`);
+                searchInp.value = "";
+                searchRes.style.display = "none";
+            });
+        });
+    }
+}
+searchInp.addEventListener("change", updateSearchBar);
+filterGuard.addEventListener("change", updateSearchBar);
+filterWing.addEventListener("change", updateSearchBar);
+filterBig.addEventListener("change", updateSearchBar);
