@@ -1,4 +1,4 @@
-tsc data.ts script.ts --target ES6 --module ES2015 --moduleResolution node
+tsc web.ts data.ts script.ts --target ES6 --module ES2015 --moduleResolution node
 
 pridat aby to vypocitalo pocet scored pts
 udelat readme na git

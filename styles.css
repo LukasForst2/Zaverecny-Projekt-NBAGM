@@ -25,29 +25,6 @@ ul {
   margin: 0;            
   padding: 0;            
 }
-/*Styl centralniho sloupce*/
-.center-block {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.playerListCont {
-    border: 1px solid black;
-    height: 250px;
-    width: 100%;
-    overflow-y: auto;
-}
-#playerListUl li {
-    padding: 10px 15px;
-    border-bottom: 1px solid black;
-}
-#player-list li:last-child {
-  border-bottom: none;
-}
-
 /*Univeralni classes*/
 .vert-center-col {
     display: flex;
@@ -158,7 +135,7 @@ ul {
     gap: 20px;
 }
 .team-column {
-    width: 35%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -171,16 +148,25 @@ ul {
 }
 
 .team-stats {
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 15px;
     border-radius: 8px;
+    border: 3px solid rgb(214, 40, 40);;
     display: flex;
     flex-direction: column;
-    gap: 5px;
 }
 
 .team-atb {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    color: rgb(234, 226, 183);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-top: 2px solid rgb(214, 40, 40);
+    padding: 5px 20px;
+    text-align: right;
+}
+.team-atb:first-child {
+    border: none;
+}
+.team-atb:last-child {
+    font-weight: bold;
 }
 
 .slot {
@@ -222,4 +208,90 @@ h2 {
 .team-name::placeholder {
     color: rgb(89, 89, 89);
     opacity: 1; 
+}
+/*Styl centralniho sloupce*/
+.center-block {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.playerListCont {
+    border: 3px solid rgb(247, 127, 0);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+
+    max-height: 500px;
+    width: 95%;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.playerListCont::-webkit-scrollbar {
+    display: none; /* WebKit (Chrome, Safari, Opera) */
+}
+#playerListUl li {
+    /*4 slopcove rozlozeni karty hrace ve vyhledavaci*/
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr auto; 
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid  rgb(247, 127, 0);
+    font-size: 0.95rem;
+    margin-top: 5px;
+
+    color: rgb(234, 226, 183);
+}
+#playerListUl li:first-child {
+    margin-top: 0;
+}
+.add-btn {
+    display: flex;
+    gap: 8px;
+}
+.add-btn button {
+    padding: 4px 8px;
+    background-color: rgb(252, 191, 73);
+    color: rgba(0, 48, 73, 0.5);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 555;
+}
+.add-btn button:hover {
+    padding: 4px 8px;
+    background-color: rgb(234, 226, 183);
+    color: rgba(0, 48, 73, 1);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 555;
+}
+
+/* Styl tlačitka Simulate */
+.simulate-button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+#simulateBtn {
+    padding: 12px 25px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: rgb(214, 40, 40);
+    color: rgb(234, 226, 183);
+    border: 3px solid rgb(247, 127, 0);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    text-transform: uppercase;
+}
+
+#simulateBtn:hover {
+    background-color: rgb(247, 127, 0);
+    color: rgb(0, 48, 73);
+    border-color: rgb(234, 226, 183);
 }
