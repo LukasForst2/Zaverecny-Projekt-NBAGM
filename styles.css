@@ -56,8 +56,14 @@ body  {
     padding: 5px;
     border-radius: 5px;
     border: solid 2px rgb(214, 40, 40);
-    color: rgb(113, 113, 113);
+    color: rgb(0, 48, 73); /* This is the color of the actual typed text */
     background-color:  rgba(255, 255, 255, 0.1);
+}
+
+/* This specifically styles the placeholder text */
+#searchInp::placeholder {
+    color: rgb(89, 89, 89);
+    opacity: 1;
 }
 
 .search-bar {
@@ -178,4 +184,25 @@ h2 {
     text-align: center;
     font-size: 2rem;
     margin-bottom: 10px;
+}
+
+.name-bar {
+    position: relative;
+}
+
+.team-name {
+    width: 100%;
+    font-size: 1.2rem;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 2px rgb(247, 127, 0);
+    color: rgb(0, 48, 73); /* This is the color of the actual typed text */
+    background-color:  rgba(255, 255, 255, 0.1);
+}
+
+/* This specifically styles the placeholder text */
+.team-name::placeholder {
+    color: rgb(234, 226, 183); /* Light beige from your theme */
+    opacity: 1; 
 }

@@ -27,6 +27,9 @@
     <main class="matchup vert-center-row">
         <section class="team-column" id="teamA">
             <h2 class="team-header" id="teamAheader">Team A</h2>
+            <div class="name-bar vert-center-col">
+                <input type="text" class="team-name" id="teamAname" placeholder="Enter team name...">
+            </div>
             <div class="roster-chart" id="teamAchart">
                 <div class="slot empty">Empty slot...</div>
                 <div class="slot empty">Empty slot...</div>
@@ -43,16 +46,23 @@
                 <p id="teamArebounding" class="team-atb">80</p>
                 <p id="teamAoverall" class="team-atb">85</p>
             </div>
+            
         </section>
 
         <section class="center-block">
             <div id="playerPool" class="player-pool">
                 <h2>Available Players</h2>
             </div>
+            <div class="simulate-button vert-center-col">
+                <button id="simulateBtn">Simulate</button>
+            </div>
         </section>
 
         <section class="team-column" id="teamB">
             <h2 class="team-header" id="teamBheader">Team B</h2>
+             <div class="name-bar vert-center-col">
+                <input type="text" class="team-name" id="teamBname" placeholder="Enter team name...">
+            </div>
             <div class="roster-chart" id="teamBchart">
                 <div class="slot empty">Empty slot...</div>
                 <div class="slot empty">Empty slot...</div>
