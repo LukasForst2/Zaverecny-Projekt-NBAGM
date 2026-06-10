@@ -92,6 +92,9 @@ export class Team {
     get name() {
         return this._name;
     }
+    set name(newName) {
+        this._name = newName;
+    }
     addPlayer(player) {
         const currentPay = this.getTotalSalary();
         if (currentPay + player.salary > this._salaryCap) {

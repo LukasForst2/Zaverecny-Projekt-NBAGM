@@ -1,32 +1,35 @@
-import { Player, activePlayers } from "./script.js";
-
+import { Player, activePlayers, Team } from "./script.js";
 //Zapisovani jmena tymu
+//A
 const teamAnameInp = document.getElementById(`teamAnameInp`) as HTMLInputElement;
 const teamAhead = document.getElementById(`teamAheader`) as HTMLHeadingElement;
+//B
+const teamBnameInp = document.getElementById(`teamBnameInp`) as HTMLInputElement;
+const teamBhead = document.getElementById(`teamBheader`) as HTMLHeadingElement;
+//dva tymy na zapas
+const teamA = new Team("Team A");
+const teamB = new Team("Team B");
+teamAhead.textContent = teamA.name;
+teamBhead.textContent = teamB.name;
 
 if (teamAnameInp && teamAhead) {
     teamAnameInp.addEventListener(`keydown`, (event: KeyboardEvent) => {
         if (event.key ===  `Enter`) {
-            teamAhead.textContent = teamAnameInp.value;
+            teamA.name = teamAnameInp.value;
             teamAnameInp.value = ``;
-
+            teamAhead.textContent = teamA.name;
         }
     }) 
 }
-
-const teamBnameInp = document.getElementById(`teamBnameInp`) as HTMLInputElement;
-const teamBhead = document.getElementById(`teamBheader`) as HTMLHeadingElement;
-
 if (teamBnameInp && teamBhead) {
     teamBnameInp.addEventListener(`keydown`, (event: KeyboardEvent) => {
         if (event.key ===  `Enter`) {
-            teamBhead.textContent = teamBnameInp.value;
+            teamB.name = teamBnameInp.value;
             teamBnameInp.value = ``;
-
+            teamBhead.textContent = teamB.name;
         }
     }) 
 }
-
 //Vyhledavac hracu, seznam
 
 const players: Player[] = activePlayers;
@@ -34,6 +37,7 @@ const playerList = document.getElementById(`playerListUl`) as HTMLUListElement;
 const filterGuard = document.getElementById('filterGuard') as HTMLInputElement;
 const filterWing = document.getElementById('filterWing') as HTMLInputElement;
 const filterBig = document.getElementById('filterBig') as HTMLInputElement;
+const searchInp = document.getElementById('searchInp') as HTMLInputElement;
 
 function loadPlayerList() {
     if (playerList) {
@@ -44,8 +48,14 @@ function loadPlayerList() {
         if (filterGuard.checked) allowedPos.push("Guard");
         if (filterWing.checked) allowedPos.push("Wing");
         if (filterBig.checked) allowedPos.push("BigMan");
+        //check na text v searchbaru
+        const searchText = searchInp.value.toLowerCase().trim();
 
-        const filteredPlayers = players.filter(p => allowedPos.indexOf(p.position) !== -1);
+        const filteredPlayers = players.filter(p => {
+            const matchPos = allowedPos.includes(p.position);
+            const matchTxt = p.fullName.toLowerCase().includes(searchText);
+            return matchPos && matchTxt;
+        })
 
         filteredPlayers.forEach((p) => {
             const li = document.createElement(`li`);
@@ -95,8 +105,11 @@ function loadPlayerList() {
     } 
 }
 
+//naslouchaci
 filterGuard.addEventListener('change', loadPlayerList);
 filterWing.addEventListener('change', loadPlayerList);
 filterBig.addEventListener('change', loadPlayerList);
+
+searchInp.addEventListener('input', loadPlayerList);
 
 loadPlayerList();

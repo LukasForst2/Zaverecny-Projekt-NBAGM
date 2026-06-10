@@ -1,22 +1,31 @@
-import { activePlayers } from "./script.js";
+import { activePlayers, Team } from "./script.js";
 //Zapisovani jmena tymu
+//A
 const teamAnameInp = document.getElementById(`teamAnameInp`);
 const teamAhead = document.getElementById(`teamAheader`);
+//B
+const teamBnameInp = document.getElementById(`teamBnameInp`);
+const teamBhead = document.getElementById(`teamBheader`);
+//dva tymy na zapas
+const teamA = new Team("Team A");
+const teamB = new Team("Team B");
+teamAhead.textContent = teamA.name;
+teamBhead.textContent = teamB.name;
 if (teamAnameInp && teamAhead) {
     teamAnameInp.addEventListener(`keydown`, (event) => {
         if (event.key === `Enter`) {
-            teamAhead.textContent = teamAnameInp.value;
+            teamA.name = teamAnameInp.value;
             teamAnameInp.value = ``;
+            teamAhead.textContent = teamA.name;
         }
     });
 }
-const teamBnameInp = document.getElementById(`teamBnameInp`);
-const teamBhead = document.getElementById(`teamBheader`);
 if (teamBnameInp && teamBhead) {
     teamBnameInp.addEventListener(`keydown`, (event) => {
         if (event.key === `Enter`) {
-            teamBhead.textContent = teamBnameInp.value;
+            teamB.name = teamBnameInp.value;
             teamBnameInp.value = ``;
+            teamBhead.textContent = teamB.name;
         }
     });
 }
@@ -26,6 +35,7 @@ const playerList = document.getElementById(`playerListUl`);
 const filterGuard = document.getElementById('filterGuard');
 const filterWing = document.getElementById('filterWing');
 const filterBig = document.getElementById('filterBig');
+const searchInp = document.getElementById('searchInp');
 function loadPlayerList() {
     if (playerList) {
         playerList.innerHTML = '';
@@ -37,7 +47,13 @@ function loadPlayerList() {
             allowedPos.push("Wing");
         if (filterBig.checked)
             allowedPos.push("BigMan");
-        const filteredPlayers = players.filter(p => allowedPos.indexOf(p.position) !== -1);
+        //check na text v searchbaru
+        const searchText = searchInp.value.toLowerCase().trim();
+        const filteredPlayers = players.filter(p => {
+            const matchPos = allowedPos.includes(p.position);
+            const matchTxt = p.fullName.toLowerCase().includes(searchText);
+            return matchPos && matchTxt;
+        });
         filteredPlayers.forEach((p) => {
             const li = document.createElement(`li`);
             //prvni sloupec jmeno
@@ -75,7 +91,9 @@ function loadPlayerList() {
         });
     }
 }
+//naslouchaci
 filterGuard.addEventListener('change', loadPlayerList);
 filterWing.addEventListener('change', loadPlayerList);
 filterBig.addEventListener('change', loadPlayerList);
+searchInp.addEventListener('input', loadPlayerList);
 loadPlayerList();
