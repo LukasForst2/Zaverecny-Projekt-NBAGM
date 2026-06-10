@@ -152,6 +152,16 @@ ul {
     border: 3px solid rgb(214, 40, 40);;
     display: flex;
     flex-direction: column;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+.team-stats h2 {
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
 }
 
 .team-atb {
@@ -159,7 +169,6 @@ ul {
     color: rgb(234, 226, 183);
     background-color: rgba(255, 255, 255, 0.1);
     border-top: 2px solid rgb(214, 40, 40);
-    padding: 5px 20px;
     text-align: right;
     height: 1.75rem;
 }
@@ -295,4 +304,25 @@ h2 {
     background-color: rgb(247, 127, 0);
     color: rgb(0, 48, 73);
     border-color: rgb(234, 226, 183);
+}
+
+/*footer*/
+footer {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #EAE2B7;
+    text-align: center;
+    padding: 10px;
+    margin-top: 3rem;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.6;
+    letter-spacing: 0.5px;
+    font-weight: 300;
+}
+
+footer p:hover {
+    opacity: 0.9;
 }

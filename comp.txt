@@ -1,8 +1,6 @@
 tsc web.ts data.ts script.ts --target ES2016 --module ES2015 --moduleResolution node
 
-pridat aby to vypocitalo pocet scored pts
 udelat readme na git
-udelat UI (search engine, chart tymu, score pop up) 
 Dokumentaci dodelat
 
 Here are the RGB conversions for the hex codes in your image:
@@ -16,3 +14,9 @@ Here are the RGB conversions for the hex codes in your image:
     #FCBF49: rgb(252, 191, 73)
 
     #EAE2B7: rgb(234, 226, 183)
+
+Udelat aby to zapisovalo hrace v tymu
+Omezeni aby sel hrac pridat jen 1
+Simulate button funguje + pop up creation, winner a loser
+
+fts

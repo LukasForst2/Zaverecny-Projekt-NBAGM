@@ -31,6 +31,10 @@ export abstract class Player {
         this._defense = data.defense;
         this._rebounding = data.rebounding;
     }
+
+    public get id(): number {
+        return this._id;
+    }
     
     //ziskani celeho jmena a salary, hrace
     public get fullName(): string {
@@ -99,14 +103,6 @@ export const activePlayers: Player[] = Player_catalog.map(data =>  {
         }
     }
 )
-
-/*test v konzoli, vyjede tabulka s ratingy
-console.log("--- Seznam hracu na trhu ---");
-
-activePlayers.forEach(player => {
-    const rating = player.calcOverall();
-    console.log(`${player.fullName} | Pozice: ${player.position} | Rating: ${rating} | Plat: $${(player.salary / 1000000)}M`);
-});*/
 
 //Trida pro sestaveni tymu
 export class Team {
@@ -208,36 +204,6 @@ export class Team {
         }
     }
 }
-
-//vytvoreni dvou tymu na test v konzoli
-/*
-const teamA = new Team("Kutná Hora");
-const teamB = new Team("Prágl");
-
-const jokic = activePlayers.find(p => p.fullName === "Nikola Jokic");
-const murray = activePlayers.find(p => p.fullName === "Jamal Murray");
-const ag = activePlayers.find(p => p.fullName === "Aaron Gordon");
-const miller = activePlayers.find(p => p.fullName === "Brandon Miller");
-const cade = activePlayers.find(p => p.fullName === "Kyle Lowry");
-
-const luka = activePlayers.find(p => p.fullName === "Luka Doncic");
-const maxey = activePlayers.find(p => p.fullName === "Tyrese Maxey");
-const barnes = activePlayers.find(p => p.fullName === "Scottie Barnes");
-const pwat = activePlayers.find(p => p.fullName === "Peyton Watson");
-const gobert = activePlayers.find(p => p.fullName === "Isaiah Stewart");
-
-if (jokic) teamA.addPlayer(jokic);
-if (murray) teamA.addPlayer(murray);
-//if (ag) teamA.addPlayer(ag);
-if (miller) teamA.addPlayer(miller);
-if (cade) teamA.addPlayer(cade);
-
-if (luka) teamB.addPlayer(luka);
-if (maxey) teamB.addPlayer(maxey);
-if (barnes) teamB.addPlayer(barnes);
-//if (pwat) teamB.addPlayer(pwat);
-if (gobert) teamB.addPlayer(gobert);
-*/
 
 function simulateMatch(homeTeam: Team, awayTeam: Team): void {
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);

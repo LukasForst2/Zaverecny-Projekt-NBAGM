@@ -14,6 +14,9 @@ export class Player {
         this._defense = data.defense;
         this._rebounding = data.rebounding;
     }
+    get id() {
+        return this._id;
+    }
     //ziskani celeho jmena a salary, hrace
     get fullName() {
         return `${this._name} ${this._surname}`;
@@ -103,6 +106,14 @@ export class Team {
         }
         this._roster.push(player);
         return true;
+    }
+    delPlayer(player) {
+        const index = this._roster.indexOf(player);
+        if (index !== -1) {
+            this._roster.splice(index, 1); //pomoci splice odebreme hrace :P
+            return true;
+        }
+        return false;
     }
     getTotalSalary() {
         return this._roster.reduce((sum, player) => sum + player.salary, 0);

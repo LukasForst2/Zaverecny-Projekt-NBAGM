@@ -74,7 +74,7 @@ function loadPlayerList() {
             const btnA = document.createElement(`button`);
             btnA.textContent = `+A`;
             btnA.addEventListener(`click`, () => {
-                const baller = activePlayers.find(b => b.fullName === `${p.fullName}`);
+                const baller = activePlayers.find(b => b.id === p.id);
                 if (baller) {
                     teamA.addPlayer(baller);
                     console.log(`Hráč přídán do týmu A`);
@@ -84,7 +84,7 @@ function loadPlayerList() {
             const btnB = document.createElement(`button`);
             btnB.textContent = `+B`;
             btnB.addEventListener(`click`, () => {
-                const baller = activePlayers.find(b => b.fullName === `${p.fullName}`);
+                const baller = activePlayers.find(b => b.id === p.id);
                 if (baller) {
                     teamB.addPlayer(baller);
                     console.log(`Hráč přídán do týmu B`);
