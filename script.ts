@@ -1,7 +1,7 @@
 import { Player_catalog, PlayerData, PlayerType} from "./data.js";
 
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
-abstract class Player {
+export abstract class Player {
     private _id: number;
     private _name: string;
     private _surname: string;
@@ -86,7 +86,7 @@ export class BigMan extends Player {
 
 //Pomoci switche "ozivime" hrace podle typu
 
-const activePlayers: Player[] = Player_catalog.map(data =>  {
+export const activePlayers: Player[] = Player_catalog.map(data =>  {
         switch(data.type) {
             case PlayerType.Guard:
                 return new Guard(data);

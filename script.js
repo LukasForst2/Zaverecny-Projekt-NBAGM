@@ -1,6 +1,6 @@
 import { Player_catalog, PlayerType } from "./data.js";
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
-class Player {
+export class Player {
     constructor(data) {
         if (data.salary < 0)
             throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
@@ -63,7 +63,7 @@ export class BigMan extends Player {
     }
 }
 //Pomoci switche "ozivime" hrace podle typu
-const activePlayers = Player_catalog.map(data => {
+export const activePlayers = Player_catalog.map(data => {
     switch (data.type) {
         case PlayerType.Guard:
             return new Guard(data);

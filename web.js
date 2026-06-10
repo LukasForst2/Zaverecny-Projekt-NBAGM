@@ -1,3 +1,4 @@
+import { activePlayers } from "./script.js";
 //Zapisovani jmena tymu
 const teamAnameInp = document.getElementById(`teamAnameInp`);
 const teamAhead = document.getElementById(`teamAheader`);
@@ -17,5 +18,15 @@ if (teamBnameInp && teamBhead) {
             teamBhead.textContent = teamBnameInp.value;
             teamBnameInp.value = ``;
         }
+    });
+}
+//Vyhledavac hracu, seznam
+const players = activePlayers;
+const playerList = document.getElementById(`playerListUl`);
+if (playerList) {
+    players.forEach((p) => {
+        const li = document.createElement(`li`);
+        li.textContent = `${p.fullName} - $${p.salary.toLocaleString()}`;
+        playerList.appendChild(li);
     });
 }
