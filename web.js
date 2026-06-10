@@ -37,7 +37,7 @@ function loadPlayerList() {
             allowedPos.push("Wing");
         if (filterBig.checked)
             allowedPos.push("BigMan");
-        const filteredPlayers = players.filter(p => allowedPos.includes(p.position));
+        const filteredPlayers = players.filter(p => allowedPos.indexOf(p.position) !== -1);
         filteredPlayers.forEach((p) => {
             const li = document.createElement(`li`);
             //prvni sloupec jmeno
