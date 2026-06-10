@@ -3,6 +3,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    border: 1px black solid;
 }
 .highlight {
     border: yellow solid 1px;
@@ -19,6 +20,21 @@ body  {
     background-color: rgb(0, 48, 73);
     color: white;
     font-family: sans-serif;
+}
+ul {
+  list-style-type: none; 
+  margin: 0;            
+  padding: 0;            
+}
+/*Styl centralniho sloupce*/
+.center-block {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.playerPool {
+
 }
 
 /*Univeralni classes*/
@@ -56,13 +72,12 @@ body  {
     padding: 5px;
     border-radius: 5px;
     border: solid 2px rgb(214, 40, 40);
-    color: rgb(0, 48, 73); /* This is the color of the actual typed text */
+    color: rgb(234, 226, 183);
     background-color:  rgba(255, 255, 255, 0.1);
 }
 
-/* This specifically styles the placeholder text */
 #searchInp::placeholder {
-    color: rgb(89, 89, 89);
+    color: rgb(89, 89, 89); 
     opacity: 1;
 }
 
@@ -131,14 +146,6 @@ body  {
     padding: 20px;
     gap: 20px;
 }
-
-.center-block {
-    width: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .team-column {
     width: 35%;
     display: flex;
@@ -167,11 +174,11 @@ body  {
 
 .slot {
     display: flex;
-    justify-content: center; /* Centers horizontally */
+    justify-content: center;
     align-items: center;
     height: 64px;
     font-size: 32px;
-    color: rgb(234, 226, 183);
+    color: rgba(234, 226, 183, 0.6);
     font-style: italic;
 
     border: 3px solid rgb(214, 40, 40);
@@ -197,12 +204,11 @@ h2 {
     padding: 5px;
     border-radius: 5px;
     border: solid 2px rgb(247, 127, 0);
-    color: rgb(0, 48, 73); /* This is the color of the actual typed text */
+    color: rgb(234, 226, 183);
     background-color:  rgba(255, 255, 255, 0.1);
 }
 
-/* This specifically styles the placeholder text */
 .team-name::placeholder {
-    color: rgb(234, 226, 183); /* Light beige from your theme */
+    color: rgb(89, 89, 89);
     opacity: 1; 
 }

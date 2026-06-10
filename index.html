@@ -28,7 +28,7 @@
         <section class="team-column" id="teamA">
             <h2 class="team-header" id="teamAheader">Team A</h2>
             <div class="name-bar vert-center-col">
-                <input type="text" class="team-name" id="teamAname" placeholder="Enter team name...">
+                <input type="text" class="team-name" id="teamAnameInp" placeholder="Enter name for team A...">
             </div>
             <div class="roster-chart" id="teamAchart">
                 <div class="slot empty">Empty slot...</div>
@@ -53,6 +53,12 @@
             <div id="playerPool" class="player-pool">
                 <h2>Available Players</h2>
             </div>
+            <div class="playerList vert-center-col">
+                <ul id="playerListUl">
+                    <!-- Zde se zobrazí seznam hráčů pomoci ts -->
+                </ul>
+
+            </div>
             <div class="simulate-button vert-center-col">
                 <button id="simulateBtn">Simulate</button>
             </div>
@@ -61,7 +67,7 @@
         <section class="team-column" id="teamB">
             <h2 class="team-header" id="teamBheader">Team B</h2>
              <div class="name-bar vert-center-col">
-                <input type="text" class="team-name" id="teamBname" placeholder="Enter team name...">
+                <input type="text" class="team-name" id="teamBnameInp" placeholder="Enter name for team B...">
             </div>
             <div class="roster-chart" id="teamBchart">
                 <div class="slot empty">Empty slot...</div>
@@ -84,5 +90,6 @@
 
     </div>
     <script type="module" src="script.js"></script>
+    <script type="module" src="web.js"></script>
 </body>
 </html>

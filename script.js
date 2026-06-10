@@ -1,16 +1,6 @@
 import { Player_catalog, PlayerType } from "./data.js";
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
 class Player {
-    _id;
-    _name;
-    _surname;
-    _salary;
-    //Protected, aby meli pristup k infu pro vypocet ratingu
-    _scoring;
-    _shooting;
-    _playmaking;
-    _defense;
-    _rebounding;
     constructor(data) {
         if (data.salary < 0)
             throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
@@ -94,10 +84,9 @@ activePlayers.forEach(player => {
 });*/
 //Trida pro sestaveni tymu
 export class Team {
-    _name;
-    _roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
-    _salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
     constructor(name) {
+        this._roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
+        this._salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
         this._name = name;
     }
     get name() {
@@ -174,7 +163,7 @@ export class Team {
         }
     }
 }
-//vytvoreni dvou tymu na test v konzoli, dobrou noc
+//vytvoreni dvou tymu na test v konzoli
 /*
 const teamA = new Team("Kutná Hora");
 const teamB = new Team("Prágl");
@@ -260,7 +249,7 @@ function simulateMatch(homeTeam, awayTeam) {
         awayMatchupPoints++;
         console.log(` -> ${awayTeam.name} vládne na doskoku!`);
     }
-    // VYHODNOCENÍ VÝSLEDKU
+    // VYHODNOCENÍ
     console.log("\n--- VÝSLEDEK ---");
     if (homeMatchupPoints > awayMatchupPoints) {
         console.log(`Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
@@ -281,54 +270,3 @@ function simulateMatch(homeTeam, awayTeam) {
         }
     }
 }
-//UI + HTML propojeni
-//ziskani elementu
-const searchInp = document.getElementById("searchInp");
-const searchRes = document.getElementById("searchRes");
-const filterGuard = document.getElementById("filterGuard");
-const filterWing = document.getElementById("filterWing");
-const filterBig = document.getElementById("filterBig");
-//hl funkce
-function updateSearchBar() {
-    //prevzani inputu
-    const userInp = searchInp.value.toLowerCase().trim();
-    //checkbox check
-    const showGuards = filterGuard.checked;
-    const showWings = filterWing.checked;
-    const showBigs = filterBig.checked;
-    if (userInp.length === 0) {
-        searchRes.innerHTML = "";
-        searchRes.style.display = "none";
-        return;
-    }
-    const filteredPlayers = activePlayers.filter(p => {
-        //hledame shodu v jmene
-        const matchesName = p.fullName.toLowerCase().includes(userInp);
-        let matchesType = false;
-        if (p.position === "Guard" && showGuards)
-            matchesType = true;
-        if (p.position === "Wing" && showWings)
-            matchesType = true;
-        if (p.position === "BigMan" && showBigs)
-            matchesType = true;
-        return matchesName && matchesType;
-    });
-    searchRes.innerHTML = "";
-    if (filteredPlayers.length > 0) {
-        searchRes.style.display = "block";
-        filteredPlayers.forEach(p => {
-            const item = document.createElement("div");
-            item.classList.add("suggestion-item");
-            item.textContent = `${p.fullName} | ${p.position} | OVR: ${p.calcOverall().toFixed(0)} | SCR: ${p.scoring} | SHT: ${p.shooting} | REB: ${p.rebounding} | PLM: ${p.playmaking} | DEF: ${p.defense}`;
-            item.addEventListener("click", () => {
-                console.log(`Kliknul jsi na hráče: ${p.fullName}.`);
-                searchInp.value = "";
-                searchRes.style.display = "none";
-            });
-        });
-    }
-}
-searchInp.addEventListener("change", updateSearchBar);
-filterGuard.addEventListener("change", updateSearchBar);
-filterWing.addEventListener("change", updateSearchBar);
-filterBig.addEventListener("change", updateSearchBar);
