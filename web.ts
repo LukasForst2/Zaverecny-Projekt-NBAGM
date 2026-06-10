@@ -83,11 +83,23 @@ function loadPlayerList() {
             const btnA = document.createElement(`button`);
             btnA.textContent = `+A`;
             btnA.addEventListener(`click`, () => {
+                const baller = activePlayers.find(b => b.fullName === `${p.fullName}` );
+                if (baller) {
+                    teamA.addPlayer(baller);
+                    console.log(`Hráč přídán do týmu A`);
+                    teamA.printRoster();
+                }
             })
 
             const btnB = document.createElement(`button`);
             btnB.textContent = `+B`;
             btnB.addEventListener(`click`, () => {
+                const baller = activePlayers.find(b => b.fullName === `${p.fullName}` );
+                if (baller) {
+                    teamB.addPlayer(baller);
+                    console.log(`Hráč přídán do týmu B`);
+                    teamB.printRoster();
+                }
             })
 
             //sestaveni karty hrace ve vyhledavaci
