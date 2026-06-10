@@ -1,9 +1,27 @@
-*{
-    border: solid black 1px;
+/*Zakladni pravidla*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 .highlight {
     border: yellow solid 1px;
 }
+
+#app {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body  {
+    background-color: rgb(0, 48, 73);
+    color: white;
+    font-family: sans-serif;
+}
+
+/*Univeralni classes*/
 .vert-center-col {
     display: flex;
     justify-content: center;
@@ -14,37 +32,150 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 }
 
-#app {
-    position: absolute;
-    inset: 0;
-}
-
+/*Styl hlavicky*/
 .header {
-    height: 12%;
-    margin-bottom: 1%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-.matchup {
-    height: 80%;
+.title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: rgb(247, 127, 0);
 }
-#searchInp {
+
+#searchInp {    
     font-size: 1.5rem;
     margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 2px rgb(214, 40, 40);
+    color: rgb(113, 113, 113);
+    background-color:  rgba(255, 255, 255, 0.1);
 }
+
+.search-bar {
+    position: relative;
+}
+
+.suggestions-box {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    background-color: white;
+    color: black;
+    max-height: 200px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 10;
+}
+
 .filters {
     font-size: 1.2rem;
     margin-top: 10px;
+    display: flex;
+    gap: 15px;
+
+    color: rgb(234, 226, 183);
 }
-.team-column {
-    width: 40%;
-    height: 100%;
-    border: solid pink 2px;
+
+.filters label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
+
+.filters input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid rgb(214, 40, 40);
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    position: relative;
+}
+
+.filters input[type="checkbox"]:checked {
+    background-color: rgb(247, 127, 0);
+}
+
+.filters input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 4px;
+    height: 10px;
+    border: solid rgb(234, 226, 183);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/*Hlavni cast stranky (zapas)*/
+.matchup {
+    flex: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
 .center-block {
-    width: 20%;
-    height: 100%;
-    border: solid pink 2px;
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-column {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.roster-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.team-stats {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.team-atb {
+    font-size: 1.1rem;
+}
+
+.slot {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center;
+    height: 64px;
+    font-size: 32px;
+    color: rgb(234, 226, 183);
+    font-style: italic;
+
+    border: 3px solid rgb(214, 40, 40);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+    color: rgb(214, 40, 40);
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
 }

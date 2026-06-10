@@ -197,7 +197,7 @@ export class Team {
     }
 }
 
-//vytvoreni dvou tymu na test v konzoli, dobrou noc
+//vytvoreni dvou tymu na test v konzoli
 /*
 const teamA = new Team("Kutná Hora");
 const teamB = new Team("Prágl");
@@ -225,7 +225,8 @@ if (maxey) teamB.addPlayer(maxey);
 if (barnes) teamB.addPlayer(barnes);
 //if (pwat) teamB.addPlayer(pwat);
 if (gobert) teamB.addPlayer(gobert);
-*/ 
+*/
+
 function simulateMatch(homeTeam: Team, awayTeam: Team): void {
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
 
@@ -248,13 +249,17 @@ function simulateMatch(homeTeam: Team, awayTeam: Team): void {
     
     // 1. Domácí útok vs Obrana hostů
     const homeOffense = (home.scoring + home.shooting) / 2;
+
     console.log(`Útok ${homeTeam.name} (${homeOffense.toFixed(1)}) vs Obrana ${awayTeam.name} (${away.defense.toFixed(1)})`);
+    
     if (homeOffense > away.defense) { homeMatchupPoints++; console.log(" -> Bod pro domácí ofenzívu!"); }
     else { awayMatchupPoints++; console.log(" -> Bod pro obranu hostů!"); }
 
     // 2. Útok hostů vs Obrana domácích
     const awayOffense = (away.scoring + away.shooting) / 2;
+
     console.log(`Útok ${awayTeam.name} (${awayOffense.toFixed(1)}) vs Obrana ${homeTeam.name} (${home.defense.toFixed(1)})`);
+    
     if (awayOffense > home.defense) { awayMatchupPoints++; console.log(" -> Bod pro ofenzívu hostů!"); }
     else { homeMatchupPoints++; console.log(" -> Bod pro domácí obranu!"); }
 
@@ -268,7 +273,7 @@ function simulateMatch(homeTeam: Team, awayTeam: Team): void {
     if (home.rebounding > away.rebounding) { homeMatchupPoints++; console.log(` -> ${homeTeam.name} vládne na doskoku!`); }
     else { awayMatchupPoints++; console.log(` -> ${awayTeam.name} vládne na doskoku!`); }
 
-    // VYHODNOCENÍ VÝSLEDKU
+    // VYHODNOCENÍ
     console.log("\n--- VÝSLEDEK ---");
     if (homeMatchupPoints > awayMatchupPoints) {
         console.log(`Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
@@ -289,7 +294,7 @@ function simulateMatch(homeTeam: Team, awayTeam: Team): void {
 }
 
 //UI + HTML propojeni
-
+/*
 //ziskani elementu
 const searchInp = document.getElementById("searchInp") as HTMLInputElement;
 const searchRes = document.getElementById("searchRes") as HTMLDivElement;
@@ -349,4 +354,4 @@ searchInp.addEventListener("change", updateSearchBar);
 
 filterGuard.addEventListener("change", updateSearchBar);
 filterWing.addEventListener("change", updateSearchBar);
-filterBig.addEventListener("change", updateSearchBar);
+filterBig.addEventListener("change", updateSearchBar);*/

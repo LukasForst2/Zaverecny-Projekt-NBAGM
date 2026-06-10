@@ -5,105 +5,14 @@ udelat readme na git
 udelat UI (search engine, chart tymu, score pop up) 
 Dokumentaci dodelat
 
+Here are the RGB conversions for the hex codes in your image:
 
-/* Základní reset a barvy (NBA styl) */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #1a1a1a; color: #f0f0f0; }
+    #003049: rgb(0, 48, 73)
 
-#app { display: flex; flex-direction: column; height: 100vh; padding: 20px; }
+    #D62828: rgb(214, 40, 40)
 
-/* --- HLAVIČKA (Filtry a Search) --- */
-.header {
-    display: flex; justify-content: center; align-items: center; gap: 30px;
-    background-color: #2c2c2c; padding: 20px; border-radius: 10px; margin-bottom: 20px;
-}
-.search-bar input { padding: 10px; width: 300px; border-radius: 5px; border: none; }
-.filters { display: flex; gap: 15px; }
-.filters label { cursor: pointer; }
+    #F77F00: rgb(247, 127, 0)
 
-/* --- HERNÍ PLOCHA (3 sloupce) --- */
-.arena {
-    display: flex; justify-content: space-between; flex: 1; gap: 20px;
-}
+    #FCBF49: rgb(252, 191, 73)
 
-/* --- TÝMOVÉ SLOUPCE (Kraje) --- */
-.team-column {
-    flex: 1; /* Zabere stejný prostor */
-    background-color: #2c2c2c; border-radius: 10px; padding: 20px;
-    display: flex; flex-direction: column; align-items: center;
-    border: 2px solid #444;
-}
-.team-column h2 { margin-bottom: 20px; color: #ff9900; }
-
-/* Sloty na hráče (Těch 5 karet) */
-.roster-slots { width: 100%; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-.slot {
-    background-color: #3d3d3d; border: 1px dashed #777; border-radius: 8px;
-    padding: 15px; text-align: center; height: 80px;
-    display: flex; justify-content: center; align-items: center;
-}
-.team-stats { text-align: center; font-weight: bold; font-size: 1.1em; }
-
-/* --- STŘEDOVÁ SEKCE (Zápas a Katalog) --- */
-.center-stage {
-    flex: 2; /* Zabere 2x víc místa než krajní sloupce */
-    display: flex; flex-direction: column; align-items: center; gap: 20px;
-}
-.action-btn {
-    padding: 15px 40px; font-size: 1.2em; font-weight: bold; border-radius: 8px;
-    background-color: #e33; color: white; border: none; cursor: pointer; transition: 0.2s;
-}
-.action-btn:hover { background-color: #f44; transform: scale(1.05); }
-
-/* Boxík s výsledkem zápasu */
-.result-board {
-    background-color: #1e3a5f; border: 2px solid #3a75c4; padding: 20px;
-    border-radius: 10px; text-align: center; width: 100%;
-}
-.hidden { display: none; } /* Toto budeme zapínat/vypínat přes JS */
-
-/* Draft Pool (Seznam hráčů uprostřed pro výběr) */
-.draft-pool {
-    background-color: #2c2c2c; width: 100%; flex: 1; border-radius: 10px;
-    padding: 20px; overflow-y: auto; /* Pokud jich bude hodně, půjde scrollovat */
-}
-
-/*search bar*/
-/* Obal pro vyhledávací lištu, aby našeptávač věděl, kde má viset */
-.search-bar {
-    position: relative;
-    display: inline-block;
-}
-
-/* Ten vyskakovací box s výsledky (zatím schovaný) */
-.suggestions-box {
-    display: none;
-    position: absolute;
-    top: 100%; /* Skočí hned pod input */
-    left: 0;
-    width: 100%;
-    background-color: #3d3d3d;
-    border: 1px solid #555;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
-    z-index: 1000; /* Bude plavat nade vším ostatním */
-    max-height: 300px;
-    overflow-y: auto; /* Scrollování, když najde moc hráčů */
-    box-shadow: 0px 4px 6px rgba(0,0,0,0.5);
-}
-
-/* Jednotlivý řádek v našeptávači */
-.suggestion-item {
-    padding: 12px;
-    cursor: pointer;
-    border-bottom: 1px solid #444;
-    transition: background-color 0.2s;
-}
-
-.suggestion-item:last-child {
-    border-bottom: none;
-}
-
-.suggestion-item:hover {
-    background-color: #555; /* Zvýraznění při přejetí myší */
-}
+    #EAE2B7: rgb(234, 226, 183)
