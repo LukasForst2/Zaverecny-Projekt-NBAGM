@@ -135,6 +135,14 @@ export class Team {
         this._roster.push(player);
         return true;
     }
+    public delPlayer(player: Player): boolean {
+        const index = this._roster.indexOf(player);
+        if (index !== -1) {
+            this._roster.splice(index, 1); //pomoci splice odebreme hrace :P
+            return true;
+        }
+        return false;
+    }
 
     public getTotalSalary():number {
         return this._roster.reduce((sum,player) => sum + player.salary, 0 );
