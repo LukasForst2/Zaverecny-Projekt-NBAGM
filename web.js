@@ -52,7 +52,9 @@ function loadPlayerList() {
         const filteredPlayers = players.filter(p => {
             const matchPos = allowedPos.includes(p.position);
             const matchTxt = p.fullName.toLowerCase().includes(searchText);
-            return matchPos && matchTxt;
+            //Kdyz je hrac uz v tymu tak se nebudeme zobrazovat v listu hracu
+            const isAvailable = !teamA._roster.some(r => r.id === p.id) && !teamB._roster.some(r => r.id === p.id);
+            return matchPos && matchTxt && isAvailable;
         });
         filteredPlayers.forEach((p) => {
             const li = document.createElement(`li`);
@@ -64,10 +66,10 @@ function loadPlayerList() {
             posCol.textContent = p.position;
             //treti sloupec overall
             const ovrCol = document.createElement(`span`);
-            ovrCol.textContent = `OVR: ${p.calcOverall().toString()}`;
+            ovrCol.textContent = `Rating: ${p.calcOverall().toString()}`;
             //ctvrty sloupec, plat
             const slryCol = document.createElement(`span`);
-            slryCol.textContent = `SAL: ${(p.salary / 1000000).toFixed(0)}M`;
+            slryCol.textContent = `Salary: $${(p.salary / 1000000).toFixed(0)}M`;
             //paty sloupec tlacitka na pridani do tymu A/B
             const butCont = document.createElement(`div`);
             butCont.className = `add-btn`;
@@ -76,8 +78,10 @@ function loadPlayerList() {
             btnA.addEventListener(`click`, () => {
                 const baller = activePlayers.find(b => b.id === p.id);
                 if (baller) {
-                    teamA.addPlayer(baller);
-                    console.log(`Hráč přídán do týmu A`);
+                    if (teamA.addPlayer(baller)) {
+                        loadPlayerList(); // Přenačte seznam bez přidaného hráče
+                        loadTeamRoster(); // Překreslí sestavy v UI
+                    }
                     teamA.printRoster();
                 }
             });
@@ -86,8 +90,10 @@ function loadPlayerList() {
             btnB.addEventListener(`click`, () => {
                 const baller = activePlayers.find(b => b.id === p.id);
                 if (baller) {
-                    teamB.addPlayer(baller);
-                    console.log(`Hráč přídán do týmu B`);
+                    if (teamB.addPlayer(baller)) {
+                        loadPlayerList(); // Přenačte seznam bez přidaného hráče
+                        loadTeamRoster(); // Překreslí sestavy v UI
+                    }
                     teamB.printRoster();
                 }
             });
@@ -109,3 +115,71 @@ filterWing.addEventListener('change', loadPlayerList);
 filterBig.addEventListener('change', loadPlayerList);
 searchInp.addEventListener('input', loadPlayerList);
 loadPlayerList();
+const teamAChart = document.getElementById('teamAchart');
+const teamBChart = document.getElementById('teamBchart');
+const max_roster_size = 5;
+//funkce na zivy zapis tymu do chartu
+function loadTeamRoster() {
+    if (teamAChart) {
+        teamAChart.innerHTML = ``; //clean
+        teamA._roster.forEach((p) => {
+            const slot = document.createElement(`div`);
+            slot.className = `slot`;
+            const info = document.createElement('span');
+            info.textContent = `${p.fullName} (${p.position}) - ${p.calcOverall()}`;
+            info.className = `info`;
+            const removeBtn = document.createElement(`button`);
+            removeBtn.className = `remove-btn`;
+            removeBtn.textContent = 'X';
+            //vizualni odebirani hracu z tymu
+            removeBtn.addEventListener(`click`, () => {
+                if (teamA.delPlayer(p)) {
+                    loadTeamRoster(); // Aktualizuje tým po odebrání
+                    loadPlayerList(); // Vrátí hráče zpět do tabulky
+                }
+            });
+            slot.appendChild(info);
+            slot.appendChild(removeBtn);
+            teamAChart.appendChild(slot);
+        });
+        //dokresleni prazdnych slotu
+        const emptySlotsNeeded = max_roster_size - teamA._roster.length;
+        for (let i = 0; i < emptySlotsNeeded; i++) {
+            const emptySlot = document.createElement('div');
+            emptySlot.className = 'slot empty';
+            emptySlot.textContent = 'Empty slot...';
+            teamAChart.appendChild(emptySlot);
+        }
+    }
+    if (teamBChart) {
+        teamBChart.innerHTML = ``; //clean
+        teamB._roster.forEach((p) => {
+            const slot = document.createElement(`div`);
+            slot.className = `slot`;
+            const info = document.createElement('span');
+            info.textContent = `${p.fullName} (${p.position}) - ${p.calcOverall()}`;
+            info.className = `info`;
+            const removeBtn = document.createElement(`button`);
+            removeBtn.className = `remove-btn`;
+            removeBtn.textContent = 'X';
+            //vizualni odebirani hracu z tymu
+            removeBtn.addEventListener(`click`, () => {
+                if (teamB.delPlayer(p)) {
+                    loadTeamRoster(); // Aktualizuje tým po odebrání
+                    loadPlayerList(); // Vrátí hráče zpět do tabulky
+                }
+            });
+            slot.appendChild(info);
+            slot.appendChild(removeBtn);
+            teamBChart.appendChild(slot);
+        });
+        //dokresleni prazdnych slotu
+        const emptySlotsNeededB = max_roster_size - teamB._roster.length;
+        for (let i = 0; i < emptySlotsNeededB; i++) {
+            const emptySlot = document.createElement('div');
+            emptySlot.className = 'slot empty';
+            emptySlot.textContent = 'Empty slot...';
+            teamBChart.appendChild(emptySlot);
+        }
+    }
+}

@@ -1,6 +1,16 @@
 import { Player_catalog, PlayerType } from "./data.js";
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
 export class Player {
+    _id;
+    _name;
+    _surname;
+    _salary;
+    //Protected, aby meli pristup k infu pro vypocet ratingu
+    _scoring;
+    _shooting;
+    _playmaking;
+    _defense;
+    _rebounding;
     constructor(data) {
         if (data.salary < 0)
             throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
@@ -78,18 +88,12 @@ export const activePlayers = Player_catalog.map(data => {
             throw new Error("Neznámý typ hráče"); //ochrana pred bugem
     }
 });
-/*test v konzoli, vyjede tabulka s ratingy
-console.log("--- Seznam hracu na trhu ---");
-
-activePlayers.forEach(player => {
-    const rating = player.calcOverall();
-    console.log(`${player.fullName} | Pozice: ${player.position} | Rating: ${rating} | Plat: $${(player.salary / 1000000)}M`);
-});*/
 //Trida pro sestaveni tymu
 export class Team {
+    _name;
+    _roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
+    _salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
     constructor(name) {
-        this._roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
-        this._salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
         this._name = name;
     }
     get name() {
@@ -100,11 +104,21 @@ export class Team {
     }
     addPlayer(player) {
         const currentPay = this.getTotalSalary();
+        //kontrolni prvky aby tym dodrzoval pravidla
+        if (this._roster.length === 5) {
+            console.error(`Tým je plný. Hráče ${player.fullName} nelze přidat do týmu!`);
+            return false;
+        }
+        if (this._roster.some(p => p.id === player.id)) { //aby v tymu nebyli duplicitni hraci
+            console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Hráč už v týmu je!`);
+            return false;
+        }
         if (currentPay + player.salary > this._salaryCap) {
             console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Plat překračuje limit pro výplaty!`);
             return false;
         }
         this._roster.push(player);
+        console.log(`Hráč přídán do týmu`);
         return true;
     }
     delPlayer(player) {
@@ -177,35 +191,6 @@ export class Team {
         }
     }
 }
-//vytvoreni dvou tymu na test v konzoli
-/*
-const teamA = new Team("Kutná Hora");
-const teamB = new Team("Prágl");
-
-const jokic = activePlayers.find(p => p.fullName === "Nikola Jokic");
-const murray = activePlayers.find(p => p.fullName === "Jamal Murray");
-const ag = activePlayers.find(p => p.fullName === "Aaron Gordon");
-const miller = activePlayers.find(p => p.fullName === "Brandon Miller");
-const cade = activePlayers.find(p => p.fullName === "Kyle Lowry");
-
-const luka = activePlayers.find(p => p.fullName === "Luka Doncic");
-const maxey = activePlayers.find(p => p.fullName === "Tyrese Maxey");
-const barnes = activePlayers.find(p => p.fullName === "Scottie Barnes");
-const pwat = activePlayers.find(p => p.fullName === "Peyton Watson");
-const gobert = activePlayers.find(p => p.fullName === "Isaiah Stewart");
-
-if (jokic) teamA.addPlayer(jokic);
-if (murray) teamA.addPlayer(murray);
-//if (ag) teamA.addPlayer(ag);
-if (miller) teamA.addPlayer(miller);
-if (cade) teamA.addPlayer(cade);
-
-if (luka) teamB.addPlayer(luka);
-if (maxey) teamB.addPlayer(maxey);
-if (barnes) teamB.addPlayer(barnes);
-//if (pwat) teamB.addPlayer(pwat);
-if (gobert) teamB.addPlayer(gobert);
-*/
 function simulateMatch(homeTeam, awayTeam) {
     console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
     if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu

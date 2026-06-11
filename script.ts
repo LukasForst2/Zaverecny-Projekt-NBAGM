@@ -124,11 +124,21 @@ export class Team {
 
     public addPlayer(player: Player): boolean {
         const currentPay = this.getTotalSalary();
+        //kontrolni prvky aby tym dodrzoval pravidla
+        if (this._roster.length === 5) {
+            console.error(`Tým je plný. Hráče ${player.fullName} nelze přidat do týmu!`);
+            return false;
+        }
+        if (this._roster.some(p => p.id === player.id)) { //aby v tymu nebyli duplicitni hraci
+            console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Hráč už v týmu je!`);
+            return false;
+        }
         if (currentPay + player.salary > this._salaryCap) {
             console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Plat překračuje limit pro výplaty!`);
             return false;
         }
         this._roster.push(player);
+        console.log(`Hráč přídán do týmu`);
         return true;
     }
     public delPlayer(player: Player): boolean {
