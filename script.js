@@ -186,7 +186,6 @@ export class Team {
 }
 export function simulateMatch(homeTeam, awayTeam) {
     let output = `<div class="match-simulation">`;
-    output += `<h2>=== ${homeTeam.name} vs ${awayTeam.name} ===</h2>`;
     if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
         return output + `<p style="color: #D62828;">Team ${homeTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
     }
@@ -197,7 +196,7 @@ export function simulateMatch(homeTeam, awayTeam) {
     const away = awayTeam.getCategoryStats();
     let homeMatchupPoints = 0;
     let awayMatchupPoints = 0;
-    output += `<h3 style="color: #F77F00; margin-bottom: 10px;">--- MATCHUPS ---</h3><ul style="list-style-type: none; padding-left: 0;">`;
+    output += `<h3 style="color: #F77F00; margin-bottom: 10px;">MATCHUPS:</h3><ul style="list-style-type: none; padding-left: 0;">`;
     // 1. Domácí útok vs Obrana hostů
     const homeOffense = (home.scoring + home.shooting) / 2;
     output += `<li style="margin-bottom: 5px;"><strong>${homeTeam.name} Offense</strong> (${homeOffense.toFixed(1)}) vs <strong>${awayTeam.name} Defense</strong> (${away.defense.toFixed(1)})`;
@@ -254,12 +253,12 @@ export function simulateMatch(homeTeam, awayTeam) {
     }
     output += `</ul>`;
     // VYHODNOCENÍ
-    output += `<h4 style="color: #F77F00; margin-top: 15px;">--- RESULT ---</h4>`;
+    output += `<h3 style="color: #F77F00; margin-top: 15px;">RESULT</h3>`;
     if (homeMatchupPoints > awayMatchupPoints) {
-        output += `<p><strong>Winner: <span style="color: #0ff162;">${homeTeam.name}</span></strong> (Matchup score: ${homeMatchupPoints} : ${awayMatchupPoints})</p>`;
+        output += `<p><strong>Winner: <span style="color: #0ff162;">${homeTeam.name}</span></strong> (Matchup score= ${homeMatchupPoints} : ${awayMatchupPoints})</p>`;
     }
     else if (awayMatchupPoints > homeMatchupPoints) {
-        output += `<p><strong>Winner: <span style="color: #0ff162;">${awayTeam.name}</span></strong> (Matchup score: ${awayMatchupPoints} : ${homeMatchupPoints})</p>`;
+        output += `<p><strong>Winner: <span style="color: #0ff162;">${awayTeam.name}</span></strong> (Matchup score= ${awayMatchupPoints} : ${homeMatchupPoints})</p>`;
     }
     else {
         // Pokud je remíza na matchupy, rozhoduje celkový rating + štěstí
@@ -267,10 +266,10 @@ export function simulateMatch(homeTeam, awayTeam) {
         const homeOvr = homeTeam.getTeamRating() + (Math.random() * 2);
         const awayOvr = awayTeam.getTeamRating() + (Math.random() * 2);
         if (homeOvr > awayOvr) {
-            output += `<p><strong>In a close clutch game, the winner is: <span style="color: #0ff162;">${homeTeam.name}</span>!</strong></p>`;
+            output += `<p id="winnerTXT"><strong>In a close clutch game, the winner is: <span id="winnerNAME" style="color: #0ff162;">${homeTeam.name}!</span>!</strong></p>`;
         }
         else {
-            output += `<p><strong>In a close clutch game, the winner is: <span style="color: #0ff162;">${awayTeam.name}</span>!</strong></p>`;
+            output += `<p id="winnerTXT"><strong>In a close clutch game, the winner is: <span id="winnerNAME" style="color: #0ff162;">${awayTeam.name}!</span></strong></p>`;
         }
     }
     output += `</div>`;

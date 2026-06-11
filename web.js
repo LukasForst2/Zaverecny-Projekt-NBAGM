@@ -11,6 +11,9 @@ const teamA = new Team("Team A");
 const teamB = new Team("Team B");
 teamAhead.textContent = teamA.name;
 teamBhead.textContent = teamB.name;
+const matchHeader = document.getElementById('matchHeader');
+if (matchHeader)
+    matchHeader.textContent = `${teamA.name} vs ${teamB.name}`;
 const player1 = activePlayers.find(p => p.id === 5);
 const player2 = activePlayers.find(p => p.id === 23);
 const player3 = activePlayers.find(p => p.id === 14);
@@ -34,6 +37,8 @@ if (teamAnameInp && teamAhead) {
             teamA.name = teamAnameInp.value;
             teamAnameInp.value = ``;
             teamAhead.textContent = teamA.name;
+            if (matchHeader)
+                matchHeader.textContent = `${teamA.name} vs ${teamB.name}`;
         }
     });
 }
@@ -43,6 +48,8 @@ if (teamBnameInp && teamBhead) {
             teamB.name = teamBnameInp.value;
             teamBnameInp.value = ``;
             teamBhead.textContent = teamB.name;
+            if (matchHeader)
+                matchHeader.textContent = `${teamA.name} vs ${teamB.name}`;
         }
     });
 }

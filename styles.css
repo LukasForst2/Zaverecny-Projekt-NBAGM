@@ -350,6 +350,14 @@ h2 {
 .simulate-card {
     margin-top: 20px;
     width: 100%;
+    gap: 1.5rem;
+    border: solid 4px rgb(247, 127, 0);
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+#matchHeader {
+    color: rgb(252, 191, 73);
 }
 
 #simulateBtn {
@@ -369,6 +377,27 @@ h2 {
     background-color: rgb(247, 127, 0);
     color: rgb(0, 48, 73);
     border-color: rgb(234, 226, 183);
+}
+.simulate-res {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+}
+.simulate-res h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.simulate-res li {
+    margin: 1rem;
+}
+.simulate-res ul span{
+    margin-left: 2rem;
+}
+#winnerTXT {
+    font-size: 1.25rem;
+}
+#winnerNAME {
+    font-size: 1.75rem;
 }
 
 /*footer*/
