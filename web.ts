@@ -197,7 +197,7 @@ function loadTeamRoster(){
                 if (teamB.delPlayer(p)) {
                     loadTeamRoster(); // aktualizuje team
                     loadPlayerList(); // vrati hrace zpet
-                    loadTeamStats(); //aktualizuje salary
+                    loadTeamStats(); //aktualizuje staty
                 }
             })
 
@@ -220,43 +220,43 @@ loadTeamRoster();
 
 function loadTeamStats(){ //funkce na vypsani statistik tymu
     // Team A stats
-    const teamACapEl = document.getElementById('teamAcap') as HTMLParagraphElement;
-    const teamAScoreEl = document.getElementById('teamAscoring') as HTMLParagraphElement;
-    const teamAShootEl = document.getElementById('teamAshooting') as HTMLParagraphElement;
-    const teamAPlaymakEl = document.getElementById('teamAplaymaking') as HTMLParagraphElement;
-    const teamADefEl = document.getElementById('teamAdefense') as HTMLParagraphElement;
-    const teamARebEl = document.getElementById('teamArebounding') as HTMLParagraphElement;
-    const teamAOvrEl = document.getElementById('teamAoverall') as HTMLParagraphElement;
+    const teamACapEl = document.getElementById('teamAcap') as HTMLDivElement;
+    const teamAScoreEl = document.getElementById('teamAscoring') as HTMLDivElement;
+    const teamAShootEl = document.getElementById('teamAshooting') as HTMLDivElement;
+    const teamAPlaymakEl = document.getElementById('teamAplaymaking') as HTMLDivElement;
+    const teamADefEl = document.getElementById('teamAdefense') as HTMLDivElement;
+    const teamARebEl = document.getElementById('teamArebounding') as HTMLDivElement;
+    const teamAOvrEl = document.getElementById('teamAoverall') as HTMLDivElement;
 
     // Team B stats
-    const teamBCapEl = document.getElementById('teamBcap') as HTMLParagraphElement;
-    const teamBScoreEl = document.getElementById('teamBscoring') as HTMLParagraphElement;
-    const teamBShootEl = document.getElementById('teamBshooting') as HTMLParagraphElement;
-    const teamBPlaymakEl = document.getElementById('teamBplaymaking') as HTMLParagraphElement;
-    const teamBDefEl = document.getElementById('teamBdefense') as HTMLParagraphElement;
-    const teamBRebEl = document.getElementById('teamBrebounding') as HTMLParagraphElement;
-    const teamBOvrEl = document.getElementById('teamBoverall') as HTMLParagraphElement;
+    const teamBCapEl = document.getElementById('teamBcap') as HTMLDivElement;
+    const teamBScoreEl = document.getElementById('teamBscoring') as HTMLDivElement;
+    const teamBShootEl = document.getElementById('teamBshooting') as HTMLDivElement;
+    const teamBPlaymakEl = document.getElementById('teamBplaymaking') as HTMLDivElement;
+    const teamBDefEl = document.getElementById('teamBdefense') as HTMLDivElement;
+    const teamBRebEl = document.getElementById('teamBrebounding') as HTMLDivElement;
+    const teamBOvrEl = document.getElementById('teamBoverall') as HTMLDivElement;
 
-    // Get stats for both teams
+    // ziskani statu pomoci funkce z classy
     const statsA = teamA.getCategoryStats();
     const statsB = teamB.getCategoryStats();
 
-    // Display Team A stats
-    teamACapEl.textContent = `Salary Cap: $${teamA.getTotalSalary()}M / $185M`;
-    teamAScoreEl.textContent = `Scoring: ${statsA.scoring.toFixed(1)}`;
-    teamAShootEl.textContent = `Shooting: ${statsA.shooting.toFixed(1)}`;
-    teamAPlaymakEl.textContent = `Playmaking: ${statsA.playmaking.toFixed(1)}`;
-    teamADefEl.textContent = `Defense: ${statsA.defense.toFixed(1)}`;
-    teamARebEl.textContent = `Rebounding: ${statsA.rebounding.toFixed(1)}`;
-    teamAOvrEl.textContent = `Overall Rating: ${teamA.getTeamRating().toFixed(1)}`;
+    // vypis Team A stats
+    teamACapEl.innerHTML = `<p>Salary Cap:</p> <span>$${teamA.getTotalSalary()}M / $185M<span>`;
+    teamAScoreEl.innerHTML = `Scoring: ${statsA.scoring.toFixed(1)}`;
+    teamAShootEl.innerHTML = `Shooting: ${statsA.shooting.toFixed(1)}`;
+    teamAPlaymakEl.innerHTML = `Playmaking: ${statsA.playmaking.toFixed(1)}`;
+    teamADefEl.innerHTML = `Defense: ${statsA.defense.toFixed(1)}`;
+    teamARebEl.innerHTML = `Rebounding: ${statsA.rebounding.toFixed(1)}`;
+    teamAOvrEl.innerHTML = `Overall Rating: ${teamA.getTeamRating().toFixed(1)}`;
 
-    // Display Team B stats
-    teamBCapEl.textContent = `Salary Cap: $${teamB.getTotalSalary()}M / $185M`;
-    teamBScoreEl.textContent = `Scoring: ${statsB.scoring.toFixed(1)}`;
-    teamBShootEl.textContent = `Shooting: ${statsB.shooting.toFixed(1)}`;
-    teamBPlaymakEl.textContent = `Playmaking: ${statsB.playmaking.toFixed(1)}`;
-    teamBDefEl.textContent = `Defense: ${statsB.defense.toFixed(1)}`;
-    teamBRebEl.textContent = `Rebounding: ${statsB.rebounding.toFixed(1)}`;
-    teamBOvrEl.textContent = `Overall Rating: ${teamB.getTeamRating().toFixed(1)}`;
+    // vypis Team B stats
+    teamBCapEl.innerHTML = `Salary Cap: $${teamB.getTotalSalary()}M / $185M`;
+    teamBScoreEl.innerHTML = `Scoring: ${statsB.scoring.toFixed(1)}`;
+    teamBShootEl.innerHTML = `Shooting: ${statsB.shooting.toFixed(1)}`;
+    teamBPlaymakEl.innerHTML = `Playmaking: ${statsB.playmaking.toFixed(1)}`;
+    teamBDefEl.innerHTML = `Defense: ${statsB.defense.toFixed(1)}`;
+    teamBRebEl.innerHTML = `Rebounding: ${statsB.rebounding.toFixed(1)}`;
+    teamBOvrEl.innerHTML = `Overall Rating: ${teamB.getTeamRating().toFixed(1)}`;
 }
 loadTeamStats();

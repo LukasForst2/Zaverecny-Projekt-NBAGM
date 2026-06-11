@@ -128,7 +128,7 @@ ul {
     transform: rotate(45deg);
 }
 
-/*Hlavni cast stranky (zapas)*/
+/*Hlavni cast stranky (zapas) (sloupce s informacemi o tymu)*/
 .matchup {
     flex: 1;
     padding: 20px;
@@ -164,7 +164,10 @@ ul {
     padding: 10px;
 }
 
-.team-atb {
+.team-atb span {
+    display: flex;
+    justify-content: center;
+    align-items: end;
     font-size: 1.2rem;
     color: rgb(234, 226, 183);
     background-color: rgba(255, 255, 255, 0.1);
@@ -269,7 +272,7 @@ h2 {
     width: 95%;
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    -ms-overflow-style: none;  /* Internet Explorer */
 }
 
 .playerListCont::-webkit-scrollbar {

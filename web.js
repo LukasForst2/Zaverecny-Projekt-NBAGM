@@ -170,7 +170,7 @@ function loadTeamRoster() {
                 if (teamB.delPlayer(p)) {
                     loadTeamRoster(); // aktualizuje team
                     loadPlayerList(); // vrati hrace zpet
-                    loadTeamStats(); //aktualizuje salary
+                    loadTeamStats(); //aktualizuje staty
                 }
             });
             slot.appendChild(info);
@@ -189,5 +189,40 @@ function loadTeamRoster() {
 }
 loadTeamRoster();
 function loadTeamStats() {
+    // Team A stats
+    const teamACapEl = document.getElementById('teamAcap');
+    const teamAScoreEl = document.getElementById('teamAscoring');
+    const teamAShootEl = document.getElementById('teamAshooting');
+    const teamAPlaymakEl = document.getElementById('teamAplaymaking');
+    const teamADefEl = document.getElementById('teamAdefense');
+    const teamARebEl = document.getElementById('teamArebounding');
+    const teamAOvrEl = document.getElementById('teamAoverall');
+    // Team B stats
+    const teamBCapEl = document.getElementById('teamBcap');
+    const teamBScoreEl = document.getElementById('teamBscoring');
+    const teamBShootEl = document.getElementById('teamBshooting');
+    const teamBPlaymakEl = document.getElementById('teamBplaymaking');
+    const teamBDefEl = document.getElementById('teamBdefense');
+    const teamBRebEl = document.getElementById('teamBrebounding');
+    const teamBOvrEl = document.getElementById('teamBoverall');
+    // ziskani statu pomoci funkce z classy
+    const statsA = teamA.getCategoryStats();
+    const statsB = teamB.getCategoryStats();
+    // vypis Team A stats
+    teamACapEl.innerHTML = `<p>Salary Cap:</p> <span>$${teamA.getTotalSalary()}M / $185M<span>`;
+    teamAScoreEl.innerHTML = `Scoring: ${statsA.scoring.toFixed(1)}`;
+    teamAShootEl.innerHTML = `Shooting: ${statsA.shooting.toFixed(1)}`;
+    teamAPlaymakEl.innerHTML = `Playmaking: ${statsA.playmaking.toFixed(1)}`;
+    teamADefEl.innerHTML = `Defense: ${statsA.defense.toFixed(1)}`;
+    teamARebEl.innerHTML = `Rebounding: ${statsA.rebounding.toFixed(1)}`;
+    teamAOvrEl.innerHTML = `Overall Rating: ${teamA.getTeamRating().toFixed(1)}`;
+    // vypis Team B stats
+    teamBCapEl.innerHTML = `Salary Cap: $${teamB.getTotalSalary()}M / $185M`;
+    teamBScoreEl.innerHTML = `Scoring: ${statsB.scoring.toFixed(1)}`;
+    teamBShootEl.innerHTML = `Shooting: ${statsB.shooting.toFixed(1)}`;
+    teamBPlaymakEl.innerHTML = `Playmaking: ${statsB.playmaking.toFixed(1)}`;
+    teamBDefEl.innerHTML = `Defense: ${statsB.defense.toFixed(1)}`;
+    teamBRebEl.innerHTML = `Rebounding: ${statsB.rebounding.toFixed(1)}`;
+    teamBOvrEl.innerHTML = `Overall Rating: ${teamB.getTeamRating().toFixed(1)}`;
 }
 loadTeamStats();

@@ -15,7 +15,5 @@ Here are the RGB conversions for the hex codes in your image:
 
     #EAE2B7: rgb(234, 226, 183)
 
-Udelat aby to zapisovalo hrace v tymu
 Simulate button funguje + pop up creation, winner a loser
-
-fts
+Jeste cast co vypistuje slabiny tymu. (barevne vyznacit stat co je slabej).
