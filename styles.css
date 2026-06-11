@@ -138,7 +138,7 @@ ul {
     width: 30%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+
 }
 
 .roster-chart {
@@ -148,40 +148,67 @@ ul {
 }
 
 .team-stats {
-    border-radius: 8px;
+    border-radius: 8px 8px 0px 0px;
     border: 3px solid rgb(214, 40, 40);;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    height: 300px;
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    justify-content: space-between;
 }
-.team-stats h2 {
+.stats-header {
     font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: 0;
     padding: 10px;
 }
 
-.team-atb span {
+.team-atb {
     display: flex;
-    justify-content: center;
-    align-items: end;
+    justify-content: space-between;
+    align-items: center; /* This ensures both elements are vertically centered */
     font-size: 1.2rem;
     color: rgb(234, 226, 183);
     background-color: rgba(255, 255, 255, 0.1);
     border-top: 2px solid rgb(214, 40, 40);
     text-align: right;
-    height: 1.75rem;
-}
-.team-atb:first-child {
-    border: none;
+    height: 100%;
+
+    padding: 5px;
 }
 .team-atb:last-child {
+    border-top: 4px solid rgb(214, 40, 40);
+    border-bottom: 2px solid rgb(214, 40, 40);
     font-weight: bold;
 }
+.team-atb p {
+    margin: 0;
+}
+.weakness-card {
+    border-style: solid;
+    border-radius: 0px 0px 8px 8px;
+    border-color: rgb(214, 40, 40);
+    border-width: 0px 4px 4px 4px;
 
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.weaknesses-list {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-top: 4px solid rgb(214, 40, 40);
+    font-size: 1.2rem;
+    padding: 15px 35px 15px 35px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+}
 .slot {
     display: flex;
     justify-content: space-between;
@@ -207,7 +234,7 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 96px;
+    height: 112px;
     font-size: 1.5rem;
     color: rgba(235, 235, 235, 0.4);
     font-style: italic;
@@ -317,7 +344,7 @@ h2 {
 }
 
 /* Styl tlačitka Simulate */
-.simulate-button {
+.simulate-card {
     margin-top: 20px;
     width: 100%;
 }

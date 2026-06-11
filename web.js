@@ -11,6 +11,20 @@ const teamA = new Team("Team A");
 const teamB = new Team("Team B");
 teamAhead.textContent = teamA.name;
 teamBhead.textContent = teamB.name;
+/*const player1 = activePlayers.find(p => p.id === 5);
+const player2 = activePlayers.find(p => p.id === 23);
+const player3 = activePlayers.find(p => p.id === 14);
+const player4 = activePlayers.find(p => p.id === 2);
+if(player1 && player2 && player3 && player4){
+    teamA.addPlayer(player1);
+    teamB.addPlayer(player1);
+    teamA.addPlayer(player2);
+    teamB.addPlayer(player2);
+    teamA.addPlayer(player3);
+    teamB.addPlayer(player3);
+    teamA.addPlayer(player4);
+    teamB.addPlayer(player4);
+}*/
 if (teamAnameInp && teamAhead) {
     teamAnameInp.addEventListener(`keydown`, (event) => {
         if (event.key === `Enter`) {
@@ -82,6 +96,7 @@ function loadPlayerList() {
                         loadPlayerList(); // Přenačte seznam bez přidaného hráče
                         loadTeamRoster(); // Překreslí sestavy v UI
                         loadTeamStats();
+                        weaknessList();
                     }
                     teamA.printRoster();
                 }
@@ -95,6 +110,7 @@ function loadPlayerList() {
                         loadPlayerList(); // Přenačte seznam bez přidaného hráče
                         loadTeamRoster(); // Překreslí sestavy v UI
                         loadTeamStats();
+                        weaknessList();
                     }
                     teamB.printRoster();
                 }
@@ -139,6 +155,7 @@ function loadTeamRoster() {
                     loadTeamRoster(); // Aktualizuje tým po odebrání
                     loadPlayerList(); // Vrátí hráče zpět do tabulky
                     loadTeamStats();
+                    weaknessList();
                 }
             });
             slot.appendChild(info);
@@ -171,6 +188,7 @@ function loadTeamRoster() {
                     loadTeamRoster(); // aktualizuje team
                     loadPlayerList(); // vrati hrace zpet
                     loadTeamStats(); //aktualizuje staty
+                    weaknessList();
                 }
             });
             slot.appendChild(info);
@@ -209,20 +227,27 @@ function loadTeamStats() {
     const statsA = teamA.getCategoryStats();
     const statsB = teamB.getCategoryStats();
     // vypis Team A stats
-    teamACapEl.innerHTML = `<p>Salary Cap:</p> <span>$${teamA.getTotalSalary()}M / $185M<span>`;
-    teamAScoreEl.innerHTML = `Scoring: ${statsA.scoring.toFixed(1)}`;
-    teamAShootEl.innerHTML = `Shooting: ${statsA.shooting.toFixed(1)}`;
-    teamAPlaymakEl.innerHTML = `Playmaking: ${statsA.playmaking.toFixed(1)}`;
-    teamADefEl.innerHTML = `Defense: ${statsA.defense.toFixed(1)}`;
-    teamARebEl.innerHTML = `Rebounding: ${statsA.rebounding.toFixed(1)}`;
-    teamAOvrEl.innerHTML = `Overall Rating: ${teamA.getTeamRating().toFixed(1)}`;
+    teamACapEl.innerHTML = `<p>Salary Cap:</p> <span>$${teamA.getTotalSalary()}M / $185M</span>`;
+    teamAScoreEl.innerHTML = `<p>Scoring:</p> <span>${statsA.scoring.toFixed(1)}</span>`;
+    teamAShootEl.innerHTML = `<p>Shooting:</p> <span>${statsA.shooting.toFixed(1)}</span>`;
+    teamAPlaymakEl.innerHTML = `<p>Playmaking:</p> <span>${statsA.playmaking.toFixed(1)}</span>`;
+    teamADefEl.innerHTML = `<p>Defense:</p> <span>${statsA.defense.toFixed(1)}</span>`;
+    teamARebEl.innerHTML = `<p>Rebounding:</p> <span>${statsA.rebounding.toFixed(1)}</span>`;
+    teamAOvrEl.innerHTML = `<p>Overall Rating:</p> <span>${teamA.getTeamRating().toFixed(1)}</span>`;
     // vypis Team B stats
-    teamBCapEl.innerHTML = `Salary Cap: $${teamB.getTotalSalary()}M / $185M`;
-    teamBScoreEl.innerHTML = `Scoring: ${statsB.scoring.toFixed(1)}`;
-    teamBShootEl.innerHTML = `Shooting: ${statsB.shooting.toFixed(1)}`;
-    teamBPlaymakEl.innerHTML = `Playmaking: ${statsB.playmaking.toFixed(1)}`;
-    teamBDefEl.innerHTML = `Defense: ${statsB.defense.toFixed(1)}`;
-    teamBRebEl.innerHTML = `Rebounding: ${statsB.rebounding.toFixed(1)}`;
-    teamBOvrEl.innerHTML = `Overall Rating: ${teamB.getTeamRating().toFixed(1)}`;
+    teamBCapEl.innerHTML = `<p>Salary Cap:</p> <span>$${teamB.getTotalSalary()}M / $185M</span>`;
+    teamBScoreEl.innerHTML = `<p>Scoring:</p> <span>${statsB.scoring.toFixed(1)}</span>`;
+    teamBShootEl.innerHTML = `<p>Shooting:</p> <span>${statsB.shooting.toFixed(1)}</span>`;
+    teamBPlaymakEl.innerHTML = `<p>Playmaking:</p> <span>${statsB.playmaking.toFixed(1)}</span>`;
+    teamBDefEl.innerHTML = `<p>Defense:</p> <span>${statsB.defense.toFixed(1)}</span>`;
+    teamBRebEl.innerHTML = `<p>Rebounding:</p> <span>${statsB.rebounding.toFixed(1)}</span>`;
+    teamBOvrEl.innerHTML = `<p>Overall Rating:</p> <span>${teamB.getTeamRating().toFixed(1)}</span>`;
 }
 loadTeamStats();
+const weakA = document.getElementById(`weaknessesA`);
+const weakB = document.getElementById(`weaknessesB`);
+function weaknessList() {
+    weakA.innerHTML = teamA.printWeaknesses();
+    weakB.innerHTML = teamB.printWeaknesses();
+}
+weaknessList();

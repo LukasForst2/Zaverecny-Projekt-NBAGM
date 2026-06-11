@@ -159,24 +159,28 @@ export class Team {
     printWeaknesses() {
         const stats = this.getCategoryStats();
         const weaknesses = [];
-        // Hranice pro slabinu nastavíme na 75 bodů
+        // Hranice pro slabinu nastavíme na 80 bodů
         const hranice = 80;
-        if (stats.defense < hranice)
-            weaknesses.push(`Děravá obrana (pod ${hranice})`);
-        if (stats.shooting < hranice)
-            weaknesses.push(`Špatný spacing/střelba (pod ${hranice})`);
-        if (stats.rebounding < hranice)
-            weaknesses.push(`Problém na doskoku (pod ${hranice})`);
-        if (stats.playmaking < hranice)
-            weaknesses.push(`Chybí tvůrce hry (pod ${hranice})`);
-        if (stats.scoring < hranice)
-            weaknesses.push(`Slabá ofenzíva (pod ${hranice})`);
-        console.log(`\n--- SKAUTING REPORT: ${this._name} ---`);
-        if (weaknesses.length > 0) {
-            console.log(`Slabiny týmu: ${weaknesses.join(", ")}`);
+        if (this._roster.length > 0) {
+            if (stats.defense < hranice)
+                weaknesses.push(`<span style="color: #FCBF49;">!!! Defensive issues !!!</span>`);
+            if (stats.shooting < hranice)
+                weaknesses.push(`<span style="color: #FCBF49;">!!! Bad spacing/shooting !!!</span>`);
+            if (stats.rebounding < hranice)
+                weaknesses.push(`<span style="color: #FCBF49;">!!! Weak rebounding !!!</span>`);
+            if (stats.playmaking < hranice)
+                weaknesses.push(`<span style="color: #FCBF49;">!!! Missing playmaking !!!</span>`);
+            if (stats.scoring < hranice)
+                weaknesses.push(`<span style="color: #FCBF49;">!!! Weak offense !!!</span>`);
         }
         else {
-            console.log(`Tým je skvěle vyvážený, nemá žádnou výraznou slabinu.`);
+            return "";
+        }
+        if (weaknesses.length > 0) {
+            return `${weaknesses.join(`<br><br>`)}`;
+        }
+        else {
+            return `<p style="color: #25d164;">This team is balanced and doesn't have any glaring weaknesses.</p>`;
         }
     }
 }
