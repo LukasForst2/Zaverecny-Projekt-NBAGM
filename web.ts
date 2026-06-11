@@ -1,4 +1,4 @@
-import { Player, activePlayers, Team } from "./script.js";
+import { Player, activePlayers, Team, simulateMatch } from "./script.js";
 //Zapisovani jmena tymu
 //A
 const teamAnameInp = document.getElementById(`teamAnameInp`) as HTMLInputElement;
@@ -12,11 +12,12 @@ const teamB = new Team("Team B");
 teamAhead.textContent = teamA.name;
 teamBhead.textContent = teamB.name;
 
-/*const player1 = activePlayers.find(p => p.id === 5);
+const player1 = activePlayers.find(p => p.id === 5);
 const player2 = activePlayers.find(p => p.id === 23); 
 const player3 = activePlayers.find(p => p.id === 14);
 const player4 = activePlayers.find(p => p.id === 2); 
-if(player1 && player2 && player3 && player4){
+const player5 = activePlayers.find(p => p.id === 4);
+if(player1 && player2 && player3 && player4 && player5){
     teamA.addPlayer(player1);
     teamB.addPlayer(player1);
     teamA.addPlayer(player2);
@@ -25,7 +26,9 @@ if(player1 && player2 && player3 && player4){
     teamB.addPlayer(player3);
     teamA.addPlayer(player4);
     teamB.addPlayer(player4);
-}*/
+    teamA.addPlayer(player5);
+    teamB.addPlayer(player5);
+}
 
 if (teamAnameInp && teamAhead) {
     teamAnameInp.addEventListener(`keydown`, (event: KeyboardEvent) => {
@@ -288,3 +291,13 @@ function weaknessList() {
     weakB.innerHTML= teamB.printWeaknesses();
 }
 weaknessList();
+
+// Simulace zápasu
+const simBtn = document.getElementById('simulateBtn') as HTMLButtonElement;
+const simRes = document.querySelector('.simulate-res') as HTMLDivElement;
+
+if (simBtn && simRes) {
+    simBtn.addEventListener('click', () => {
+        simRes.innerHTML = simulateMatch(teamA, teamB);
+    });
+}

@@ -18,7 +18,7 @@ export abstract class Player {
     public abstract get position(): string;
 
     constructor(data: PlayerData) {
-        if (data.salary < 0) throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
+        if (data.salary < 0) throw new Error(`Player ${data.name} has an invalid salary!`); // pojistka, podle zadani
         
         this._id = data.id;
         this._name = data.name;
@@ -100,7 +100,7 @@ export const activePlayers: Player[] = Player_catalog.map(data =>  {
             case PlayerType.BigMan:
                 return new BigMan(data);
             default:
-            throw new Error("Neznámý typ hráče"); //ochrana pred bugem
+            throw new Error("Unknown player type"); //ochrana pred bugem
         }
     }
 )
@@ -127,19 +127,19 @@ export class Team {
         const currentPay = this.getTotalSalary();
         //kontrolni prvky aby tym dodrzoval pravidla
         if (this._roster.length === 5) {
-            console.error(`Tým je plný. Hráče ${player.fullName} nelze přidat do týmu!`);
+            console.error(`Team is full. Player ${player.fullName} cannot be added to the team!`);
             return false;
         }
         if (this._roster.some(p => p.id === player.id)) { //aby v tymu nebyli duplicitni hraci
-            console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Hráč už v týmu je!`);
+            console.error(`ERROR: Cannot add player ${player.fullName} to team ${this._name}. Player is already in the team!`);
             return false;
         }
         if (currentPay + player.salary > this._salaryCap) {
-            console.error(`CHYBA: Nelze přidat hráče ${player.fullName} do týmu ${this._name}. Plat překračuje limit pro výplaty!`);
+            console.error(`ERROR: Cannot add player ${player.fullName} to team ${this._name}. Salary exceeds the salary cap!`);
             return false;
         }
         this._roster.push(player);
-        console.log(`Hráč přídán do týmu`);
+        console.log(`Player added to the team`);
         return true;
     }
     public delPlayer(player: Player): boolean {
@@ -187,10 +187,10 @@ export class Team {
     }
 
     public printRoster(): void { //vypiseme roster do konzole
-        console.log(`\n--- TÝM: ${this._name.toUpperCase()} ---`);
+        console.log(`\n--- TEAM: ${this._name.toUpperCase()} ---`);
         this._roster.forEach(p => {
         });
-        console.log(`Celkový plat: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
+        console.log(`Total salary: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
         console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);
     }
 
@@ -208,7 +208,7 @@ export class Team {
             if (stats.scoring < hranice) weaknesses.push(`<span style="color: #FCBF49;">!!! Weak offense !!!</span>`);
         }
         else {
-            return "";
+            return `<p style="color: rgba(235, 235, 235, 0.5);">Build your team first...</p>`;
         }
         if (weaknesses.length > 0) {
             return `${weaknesses.join(`<br><br>`)}`;
@@ -218,16 +218,15 @@ export class Team {
     }
 }
 
-function simulateMatch(homeTeam: Team, awayTeam: Team): void {
-    console.log(`\n=== ZÁPAS: ${homeTeam.name} vs ${awayTeam.name} ===`);
+export function simulateMatch(homeTeam: Team, awayTeam: Team): string {
+    let output = `<div class="match-simulation">`;
+    output += `<h2>=== ${homeTeam.name} vs ${awayTeam.name} ===</h2>`;
 
     if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
-        console.log(`Tým ${homeTeam.name} nemá plný počet hráčů. Zápas nelze odehrát.`);
-        return;
+        return output + `<p style="color: #D62828;">Team ${homeTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
     }
     if (awayTeam._roster.length !== 5) {
-        console.log(`Tým ${awayTeam.name} nemá plný počet hráčů. Zápas nelze odehrát.`);
-        return;
+        return output + `<p style="color: #D62828;">Team ${awayTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
     }
 
     const home = homeTeam.getCategoryStats();
@@ -236,50 +235,59 @@ function simulateMatch(homeTeam: Team, awayTeam: Team): void {
     let homeMatchupPoints = 0;
     let awayMatchupPoints = 0;
 
-    console.log("\n--- HEAD-TO-HEAD MATCHUPS ---");
+    output += `<h3 style="color: #F77F00; margin-bottom: 10px;">--- MATCHUPS ---</h3><ul style="list-style-type: none; padding-left: 0;">`;
     
     // 1. Domácí útok vs Obrana hostů
     const homeOffense = (home.scoring + home.shooting) / 2;
 
-    console.log(`Útok ${homeTeam.name} (${homeOffense.toFixed(1)}) vs Obrana ${awayTeam.name} (${away.defense.toFixed(1)})`);
+    output += `<li style="margin-bottom: 5px;"><strong>${homeTeam.name} Offense</strong> (${homeOffense.toFixed(1)}) vs <strong>${awayTeam.name} Defense</strong> (${away.defense.toFixed(1)})`;
     
-    if (homeOffense > away.defense) { homeMatchupPoints++; console.log(" -> Bod pro domácí ofenzívu!"); }
-    else { awayMatchupPoints++; console.log(" -> Bod pro obranu hostů!"); }
+    if (homeOffense > away.defense) { homeMatchupPoints++; output += `<br> <span style="color: #25d164;">-> Point for home offense!</span></li>`; }
+    else if (homeOffense < away.defense) { awayMatchupPoints++; output += `<br> <span style="color: #25d164;">-> Point for away defense!</span></li>`; }
+    else { output += `<br> <span style="color: #FCBF49;">-> Perfectly matched! It's a tie, no points awarded.</span></li>`; }
 
     // 2. Útok hostů vs Obrana domácích
     const awayOffense = (away.scoring + away.shooting) / 2;
 
-    console.log(`Útok ${awayTeam.name} (${awayOffense.toFixed(1)}) vs Obrana ${homeTeam.name} (${home.defense.toFixed(1)})`);
+    output += `<li style="margin-bottom: 5px;"><strong>${awayTeam.name} Offense</strong> (${awayOffense.toFixed(1)}) vs <strong>${homeTeam.name} Defense</strong> (${home.defense.toFixed(1)})`;
     
-    if (awayOffense > home.defense) { awayMatchupPoints++; console.log(" -> Bod pro ofenzívu hostů!"); }
-    else { homeMatchupPoints++; console.log(" -> Bod pro domácí obranu!"); }
+    if (awayOffense > home.defense) { awayMatchupPoints++; output += `<br> <span style="color: #25d164;">-> Point for away offense!</span></li>`; }
+    else if (awayOffense < home.defense) { homeMatchupPoints++; output += `<br> <span style="color: #25d164;">-> Point for home defense!</span></li>`; }
+    else { output += `<br> <span style="color: #FCBF49;">-> Perfectly matched! It's a tie, no points awarded.</span></li>`; }
 
     // 3. Playmaking duel
-    console.log(`Tvorba hry: ${home.playmaking.toFixed(1)} vs ${away.playmaking.toFixed(1)}`);
-    if (home.playmaking > away.playmaking) { homeMatchupPoints++; console.log(` -> ${homeTeam.name} má lepší pohyb míče!`); }
-    else { awayMatchupPoints++; console.log(` -> ${awayTeam.name} má lepší pohyb míče!`); }
+    output += `<li style="margin-bottom: 5px;"><strong>Playmaking:</strong> ${home.playmaking.toFixed(1)} vs ${away.playmaking.toFixed(1)}`;
+    if (home.playmaking > away.playmaking) { homeMatchupPoints++; output += `<br> <span style="color: #25d164;">-> ${homeTeam.name} has better ball movement!</span></li>`; }
+    else if (home.playmaking < away.playmaking) { awayMatchupPoints++; output += `<br> <span style="color: #25d164;">-> ${awayTeam.name} has better ball movement!</span></li>`; }
+    else { output += `<br> <span style="color: #FCBF49;">-> Evenly matched playmaking! It's a tie, no points awarded.</span></li>`; }
 
     // 4. Souboj pod košem (Doskoky)
-    console.log(`Souboj pod košem (Rebounds): ${home.rebounding.toFixed(1)} vs ${away.rebounding.toFixed(1)}`);
-    if (home.rebounding > away.rebounding) { homeMatchupPoints++; console.log(` -> ${homeTeam.name} vládne na doskoku!`); }
-    else { awayMatchupPoints++; console.log(` -> ${awayTeam.name} vládne na doskoku!`); }
+    output += `<li style="margin-bottom: 5px;"><strong>Rebounding:</strong> ${home.rebounding.toFixed(1)} vs ${away.rebounding.toFixed(1)}`;
+    if (home.rebounding > away.rebounding) { homeMatchupPoints++; output += `<br> <span style="color: #25d164;">-> ${homeTeam.name} dominates the glass!</span></li>`; }
+    else if (home.rebounding < away.rebounding) { awayMatchupPoints++; output += `<br> <span style="color: #25d164;">-> ${awayTeam.name} dominates the glass!</span></li>`; }
+    else { output += `<br> <span style="color: #FCBF49;">-> Evenly matched on the boards! It's a tie, no points awarded.</span></li>`; }
+
+    output += `</ul>`;
 
     // VYHODNOCENÍ
-    console.log("\n--- VÝSLEDEK ---");
+    output += `<h4 style="color: #F77F00; margin-top: 15px;">--- RESULT ---</h4>`;
     if (homeMatchupPoints > awayMatchupPoints) {
-        console.log(`Vítězí tým: ${homeTeam.name} (Skóre matchupů: ${homeMatchupPoints} : ${awayMatchupPoints})`);
+        output += `<p><strong>Winner: <span style="color: #0ff162;">${homeTeam.name}</span></strong> (Matchup score: ${homeMatchupPoints} : ${awayMatchupPoints})</p>`;
     } else if (awayMatchupPoints > homeMatchupPoints) {
-        console.log(`Vítězí tým: ${awayTeam.name} (Skóre matchupů: ${awayMatchupPoints} : ${homeMatchupPoints})`);
+        output += `<p><strong>Winner: <span style="color: #0ff162;">${awayTeam.name}</span></strong> (Matchup score: ${awayMatchupPoints} : ${homeMatchupPoints})</p>`;
     } else {
         // Pokud je remíza na matchupy, rozhoduje celkový rating + štěstí
-        console.log("Remíza v matchupech!");
+        output += `<p style="margin-bottom: 5px;">Matchups are tied!</p>`;
         const homeOvr = homeTeam.getTeamRating() + (Math.random() * 2);
         const awayOvr = awayTeam.getTeamRating() + (Math.random() * 2);
         
         if (homeOvr > awayOvr) {
-            console.log(`V těsné koncovce vítězí tým: ${homeTeam.name}!`);
+            output += `<p><strong>In a close clutch game, the winner is: <span style="color: #0ff162;">${homeTeam.name}</span>!</strong></p>`;
         } else {
-            console.log(`V těsné koncovce vítězí tým: ${awayTeam.name}!`);
+            output += `<p><strong>In a close clutch game, the winner is: <span style="color: #0ff162;">${awayTeam.name}</span>!</strong></p>`;
         }
     }
+
+    output += `</div>`;
+    return output;
 }
