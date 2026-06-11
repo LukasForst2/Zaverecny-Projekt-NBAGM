@@ -96,14 +96,17 @@ export class Team {
         const currentPay = this.getTotalSalary();
         //kontrolni prvky aby tym dodrzoval pravidla
         if (this._roster.length === 5) {
+            alert(`Roster is full! You can only have 5 players on the team.`);
             console.error(`Team is full. Player ${player.fullName} cannot be added to the team!`);
             return false;
         }
         if (this._roster.some(p => p.id === player.id)) { //aby v tymu nebyli duplicitni hraci
+            alert(`${player.fullName} is already in a team!`);
             console.error(`ERROR: Cannot add player ${player.fullName} to team ${this._name}. Player is already in the team!`);
             return false;
         }
-        if (currentPay + player.salary > this._salaryCap) {
+        if (currentPay + player.salary > (this._salaryCap / 1000000)) {
+            alert(`Whoa there! Adding ${player.fullName} pushes your team over the salary cap.`);
             console.error(`ERROR: Cannot add player ${player.fullName} to team ${this._name}. Salary exceeds the salary cap!`);
             return false;
         }
@@ -156,7 +159,7 @@ export class Team {
         console.log(`\n--- TEAM: ${this._name.toUpperCase()} ---`);
         this._roster.forEach(p => {
         });
-        console.log(`Total salary: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
+        console.log(`Total salary: $${this.getTotalSalary()}M / $${this._salaryCap / 1000000}M`);
         console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);
     }
     printWeaknesses() {
