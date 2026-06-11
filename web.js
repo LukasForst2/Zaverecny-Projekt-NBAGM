@@ -90,13 +90,14 @@ function loadPlayerList() {
                         loadTeamRoster(); // Překreslí sestavy v UI
                         loadTeamStats();
                         weaknessList();
-                    } else {
-                        // Alarm na to ze hrace nelze pridat
+                    }
+                    else {
+                        // Jednoduchy hack: zmenime tlacitko na cervene s chybou
                         btnA.textContent = teamA._roster.length === 5 ? `Full!` : `Too expensive!`;
                         btnA.style.backgroundColor = `#D62828`;
                         setTimeout(() => {
                             btnA.textContent = `+A`;
-                            btnA.style.backgroundColor = ``;
+                            btnA.style.backgroundColor = ``; // vrati puvodni barvu z CSS
                         }, 1500);
                     }
                     teamA.printRoster();
@@ -112,7 +113,8 @@ function loadPlayerList() {
                         loadTeamRoster(); // Překreslí sestavy v UI
                         loadTeamStats();
                         weaknessList();
-                    } else {
+                    }
+                    else {
                         // Stejna logika pro tym B
                         btnB.textContent = teamB._roster.length === 5 ? `Full!` : `Too expensive!`;
                         btnB.style.backgroundColor = `#D62828`;

@@ -226,10 +226,10 @@ export function simulateMatch(homeTeam: Team, awayTeam: Team): string {
     let output = `<div class="match-simulation">`;
 
     if (homeTeam._roster.length !== 5) { // musi byt plny pocet hracu v tymu
-        return output + `<p style="color: #D62828;">Team ${homeTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
+        return output + `<p class="sim-error">Team ${homeTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
     }
     if (awayTeam._roster.length !== 5) {
-        return output + `<p style="color: #D62828;">Team ${awayTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
+        return output + `<p class="sim-error">Team ${awayTeam.name} does not have a full roster. Match cannot be played.</p></div>`;
     }
 
     const home = homeTeam.getCategoryStats();
