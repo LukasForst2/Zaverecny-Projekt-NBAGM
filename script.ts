@@ -41,7 +41,8 @@ export abstract class Player {
         return `${this._name} ${this._surname}`; 
     }
     public get salary(): number {
-        return this._salary;
+        const _sal = Math.round(this._salary / 1000000);
+        return _sal;
     }
     // ziskani statistik kvuli lepsimu algoritmu na vypocet vysledku zapasu
     public get scoring(): number { return this._scoring; }
@@ -188,7 +189,6 @@ export class Team {
     public printRoster(): void { //vypiseme roster do konzole
         console.log(`\n--- TÝM: ${this._name.toUpperCase()} ---`);
         this._roster.forEach(p => {
-            console.log(`- ${p.fullName} | Pozice: ${p.position} | OVR: ${p.calcOverall().toFixed(1)} | $${p.salary / 1000000}M`);
         });
         console.log(`Celkový plat: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
         console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);

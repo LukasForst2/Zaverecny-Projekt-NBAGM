@@ -69,7 +69,7 @@ function loadPlayerList() {
             ovrCol.textContent = `Rating: ${p.calcOverall().toString()}`;
             //ctvrty sloupec, plat
             const slryCol = document.createElement(`span`);
-            slryCol.textContent = `Salary: $${(p.salary / 1000000).toFixed(0)}M`;
+            slryCol.textContent = `Salary: $${p.salary}M`;
             //paty sloupec tlacitka na pridani do tymu A/B
             const butCont = document.createElement(`div`);
             butCont.className = `add-btn`;
@@ -81,6 +81,7 @@ function loadPlayerList() {
                     if (teamA.addPlayer(baller)) {
                         loadPlayerList(); // Přenačte seznam bez přidaného hráče
                         loadTeamRoster(); // Překreslí sestavy v UI
+                        loadTeamStats();
                     }
                     teamA.printRoster();
                 }
@@ -93,6 +94,7 @@ function loadPlayerList() {
                     if (teamB.addPlayer(baller)) {
                         loadPlayerList(); // Přenačte seznam bez přidaného hráče
                         loadTeamRoster(); // Překreslí sestavy v UI
+                        loadTeamStats();
                     }
                     teamB.printRoster();
                 }
@@ -126,7 +128,7 @@ function loadTeamRoster() {
             const slot = document.createElement(`div`);
             slot.className = `slot`;
             const info = document.createElement('span');
-            info.textContent = `${p.fullName} (${p.position}) - ${p.calcOverall()}`;
+            info.innerHTML = `<p>${p.fullName}</p>|${p.position} |Rating: ${p.calcOverall()} |Salary: $${p.salary}M|<br><small>|Scoring: ${p.scoring}| Shooting: ${p.shooting}| Playmaking: ${p.playmaking}|<br>|Defense: ${p.defense}| Rebounding: ${p.rebounding}|</small>`;
             info.className = `info`;
             const removeBtn = document.createElement(`button`);
             removeBtn.className = `remove-btn`;
@@ -136,6 +138,7 @@ function loadTeamRoster() {
                 if (teamA.delPlayer(p)) {
                     loadTeamRoster(); // Aktualizuje tým po odebrání
                     loadPlayerList(); // Vrátí hráče zpět do tabulky
+                    loadTeamStats();
                 }
             });
             slot.appendChild(info);
@@ -146,7 +149,7 @@ function loadTeamRoster() {
         const emptySlotsNeeded = max_roster_size - teamA._roster.length;
         for (let i = 0; i < emptySlotsNeeded; i++) {
             const emptySlot = document.createElement('div');
-            emptySlot.className = 'slot empty';
+            emptySlot.className = 'slot-empty';
             emptySlot.textContent = 'Empty slot...';
             teamAChart.appendChild(emptySlot);
         }
@@ -157,7 +160,7 @@ function loadTeamRoster() {
             const slot = document.createElement(`div`);
             slot.className = `slot`;
             const info = document.createElement('span');
-            info.textContent = `${p.fullName} (${p.position}) - ${p.calcOverall()}`;
+            info.innerHTML = `<p>${p.fullName}</p>|${p.position} |Rating: ${p.calcOverall()} |Salary: $${p.salary}M|<br><small>|Scoring: ${p.scoring}| Shooting: ${p.shooting}| Playmaking: ${p.playmaking}|<br>|Defense: ${p.defense}| Rebounding: ${p.rebounding}|</small>`;
             info.className = `info`;
             const removeBtn = document.createElement(`button`);
             removeBtn.className = `remove-btn`;
@@ -165,8 +168,9 @@ function loadTeamRoster() {
             //vizualni odebirani hracu z tymu
             removeBtn.addEventListener(`click`, () => {
                 if (teamB.delPlayer(p)) {
-                    loadTeamRoster(); // Aktualizuje tým po odebrání
-                    loadPlayerList(); // Vrátí hráče zpět do tabulky
+                    loadTeamRoster(); // aktualizuje team
+                    loadPlayerList(); // vrati hrace zpet
+                    loadTeamStats(); //aktualizuje salary
                 }
             });
             slot.appendChild(info);
@@ -177,9 +181,13 @@ function loadTeamRoster() {
         const emptySlotsNeededB = max_roster_size - teamB._roster.length;
         for (let i = 0; i < emptySlotsNeededB; i++) {
             const emptySlot = document.createElement('div');
-            emptySlot.className = 'slot empty';
+            emptySlot.className = 'slot-empty';
             emptySlot.textContent = 'Empty slot...';
             teamBChart.appendChild(emptySlot);
         }
     }
 }
+loadTeamRoster();
+function loadTeamStats() {
+}
+loadTeamStats();

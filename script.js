@@ -1,16 +1,6 @@
 import { Player_catalog, PlayerType } from "./data.js";
 //Abstraktni trida hrac, sestroji hrace podle dat v data.js(ts)
 export class Player {
-    _id;
-    _name;
-    _surname;
-    _salary;
-    //Protected, aby meli pristup k infu pro vypocet ratingu
-    _scoring;
-    _shooting;
-    _playmaking;
-    _defense;
-    _rebounding;
     constructor(data) {
         if (data.salary < 0)
             throw new Error(`Hráč ${data.name} má neplatný plat!`); // pojistka, podle zadani
@@ -32,7 +22,8 @@ export class Player {
         return `${this._name} ${this._surname}`;
     }
     get salary() {
-        return this._salary;
+        const _sal = Math.round(this._salary / 1000000);
+        return _sal;
     }
     // ziskani statistik kvuli lepsimu algoritmu na vypocet vysledku zapasu
     get scoring() { return this._scoring; }
@@ -90,10 +81,9 @@ export const activePlayers = Player_catalog.map(data => {
 });
 //Trida pro sestaveni tymu
 export class Team {
-    _name;
-    _roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
-    _salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
     constructor(name) {
+        this._roster = []; // pole s hraci na tymu, public aby se pozdeji dalo zkontrolovat pocet hracu v tymu
+        this._salaryCap = 185000000; //cap 180M aby byla simulace balancovana, readonly aby nesel menit
         this._name = name;
     }
     get name() {
@@ -162,7 +152,6 @@ export class Team {
     printRoster() {
         console.log(`\n--- TÝM: ${this._name.toUpperCase()} ---`);
         this._roster.forEach(p => {
-            console.log(`- ${p.fullName} | Pozice: ${p.position} | OVR: ${p.calcOverall().toFixed(1)} | $${p.salary / 1000000}M`);
         });
         console.log(`Celkový plat: $${this.getTotalSalary() / 1000000}M / $${this._salaryCap / 1000000}M`);
         console.log(`Team Rating: ${this.getTeamRating().toFixed(1)}`);

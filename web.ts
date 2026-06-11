@@ -77,7 +77,7 @@ function loadPlayerList() {
 
             //ctvrty sloupec, plat
             const slryCol = document.createElement(`span`);
-            slryCol.textContent = `Salary: $${(p.salary / 1000000).toFixed(0)}M`;
+            slryCol.textContent = `Salary: $${p.salary}M`;
 
             //paty sloupec tlacitka na pridani do tymu A/B
             const butCont = document.createElement(`div`);
@@ -91,6 +91,7 @@ function loadPlayerList() {
                     if (teamA.addPlayer(baller)) {
                         loadPlayerList(); // Přenačte seznam bez přidaného hráče
                         loadTeamRoster(); // Překreslí sestavy v UI
+                        loadTeamStats();
                     }
                     teamA.printRoster();
                 }
@@ -104,6 +105,7 @@ function loadPlayerList() {
                     if (teamB.addPlayer(baller)) {
                         loadPlayerList(); // Přenačte seznam bez přidaného hráče
                         loadTeamRoster(); // Překreslí sestavy v UI
+                        loadTeamStats();
                     }
                     teamB.printRoster();
                 }
@@ -147,7 +149,7 @@ function loadTeamRoster(){
             slot.className = `slot`;
 
             const info = document.createElement('span');
-            info.textContent = `${p.fullName} (${p.position}) - ${p.calcOverall()}`;
+            info.innerHTML = `<p>${p.fullName}</p>|${p.position} |Rating: ${p.calcOverall()} |Salary: $${p.salary}M|<br><small>|Scoring: ${p.scoring}| Shooting: ${p.shooting}| Playmaking: ${p.playmaking}|<br>|Defense: ${p.defense}| Rebounding: ${p.rebounding}|</small>`;
             info.className = `info`;
 
             const removeBtn = document.createElement(`button`);
@@ -158,6 +160,7 @@ function loadTeamRoster(){
                 if (teamA.delPlayer(p)) {
                     loadTeamRoster(); // Aktualizuje tým po odebrání
                     loadPlayerList(); // Vrátí hráče zpět do tabulky
+                    loadTeamStats();
                 }
             })
 
@@ -170,7 +173,7 @@ function loadTeamRoster(){
 
         for (let i = 0; i < emptySlotsNeeded; i++) {
             const emptySlot = document.createElement('div');
-            emptySlot.className = 'slot empty';
+            emptySlot.className = 'slot-empty';
             emptySlot.textContent = 'Empty slot...';
             teamAChart.appendChild(emptySlot);
         }
@@ -183,7 +186,7 @@ function loadTeamRoster(){
             slot.className = `slot`;
 
             const info = document.createElement('span');
-            info.textContent = `${p.fullName} (${p.position}) - ${p.calcOverall()}`;
+            info.innerHTML = `<p>${p.fullName}</p>|${p.position} |Rating: ${p.calcOverall()} |Salary: $${p.salary}M|<br><small>|Scoring: ${p.scoring}| Shooting: ${p.shooting}| Playmaking: ${p.playmaking}|<br>|Defense: ${p.defense}| Rebounding: ${p.rebounding}|</small>`;
             info.className = `info`;
 
             const removeBtn = document.createElement(`button`);
@@ -192,8 +195,9 @@ function loadTeamRoster(){
             //vizualni odebirani hracu z tymu
             removeBtn.addEventListener(`click`, () => {
                 if (teamB.delPlayer(p)) {
-                    loadTeamRoster(); // Aktualizuje tým po odebrání
-                    loadPlayerList(); // Vrátí hráče zpět do tabulky
+                    loadTeamRoster(); // aktualizuje team
+                    loadPlayerList(); // vrati hrace zpet
+                    loadTeamStats(); //aktualizuje salary
                 }
             })
 
@@ -206,9 +210,53 @@ function loadTeamRoster(){
 
         for (let i = 0; i < emptySlotsNeededB; i++) {
             const emptySlot = document.createElement('div');
-            emptySlot.className = 'slot empty';
+            emptySlot.className = 'slot-empty';
             emptySlot.textContent = 'Empty slot...';
             teamBChart.appendChild(emptySlot);
         }
     }
 }
+loadTeamRoster();
+
+function loadTeamStats(){ //funkce na vypsani statistik tymu
+    // Team A stats
+    const teamACapEl = document.getElementById('teamAcap') as HTMLParagraphElement;
+    const teamAScoreEl = document.getElementById('teamAscoring') as HTMLParagraphElement;
+    const teamAShootEl = document.getElementById('teamAshooting') as HTMLParagraphElement;
+    const teamAPlaymakEl = document.getElementById('teamAplaymaking') as HTMLParagraphElement;
+    const teamADefEl = document.getElementById('teamAdefense') as HTMLParagraphElement;
+    const teamARebEl = document.getElementById('teamArebounding') as HTMLParagraphElement;
+    const teamAOvrEl = document.getElementById('teamAoverall') as HTMLParagraphElement;
+
+    // Team B stats
+    const teamBCapEl = document.getElementById('teamBcap') as HTMLParagraphElement;
+    const teamBScoreEl = document.getElementById('teamBscoring') as HTMLParagraphElement;
+    const teamBShootEl = document.getElementById('teamBshooting') as HTMLParagraphElement;
+    const teamBPlaymakEl = document.getElementById('teamBplaymaking') as HTMLParagraphElement;
+    const teamBDefEl = document.getElementById('teamBdefense') as HTMLParagraphElement;
+    const teamBRebEl = document.getElementById('teamBrebounding') as HTMLParagraphElement;
+    const teamBOvrEl = document.getElementById('teamBoverall') as HTMLParagraphElement;
+
+    // Get stats for both teams
+    const statsA = teamA.getCategoryStats();
+    const statsB = teamB.getCategoryStats();
+
+    // Display Team A stats
+    teamACapEl.textContent = `Salary Cap: $${teamA.getTotalSalary()}M / $185M`;
+    teamAScoreEl.textContent = `Scoring: ${statsA.scoring.toFixed(1)}`;
+    teamAShootEl.textContent = `Shooting: ${statsA.shooting.toFixed(1)}`;
+    teamAPlaymakEl.textContent = `Playmaking: ${statsA.playmaking.toFixed(1)}`;
+    teamADefEl.textContent = `Defense: ${statsA.defense.toFixed(1)}`;
+    teamARebEl.textContent = `Rebounding: ${statsA.rebounding.toFixed(1)}`;
+    teamAOvrEl.textContent = `Overall Rating: ${teamA.getTeamRating().toFixed(1)}`;
+
+    // Display Team B stats
+    teamBCapEl.textContent = `Salary Cap: $${teamB.getTotalSalary()}M / $185M`;
+    teamBScoreEl.textContent = `Scoring: ${statsB.scoring.toFixed(1)}`;
+    teamBShootEl.textContent = `Shooting: ${statsB.shooting.toFixed(1)}`;
+    teamBPlaymakEl.textContent = `Playmaking: ${statsB.playmaking.toFixed(1)}`;
+    teamBDefEl.textContent = `Defense: ${statsB.defense.toFixed(1)}`;
+    teamBRebEl.textContent = `Rebounding: ${statsB.rebounding.toFixed(1)}`;
+    teamBOvrEl.textContent = `Overall Rating: ${teamB.getTeamRating().toFixed(1)}`;
+}
+loadTeamStats();
