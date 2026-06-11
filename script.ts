@@ -151,6 +151,10 @@ export class Team {
         return false;
     }
 
+    public clearTeam(): void {
+        this._roster = [];
+    }
+
     public getTotalSalary():number {
         return this._roster.reduce((sum,player) => sum + player.salary, 0 );
     }

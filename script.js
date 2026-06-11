@@ -119,6 +119,9 @@ export class Team {
         }
         return false;
     }
+    clearTeam() {
+        this._roster = [];
+    }
     getTotalSalary() {
         return this._roster.reduce((sum, player) => sum + player.salary, 0);
     }

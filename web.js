@@ -14,23 +14,6 @@ teamBhead.textContent = teamB.name;
 const matchHeader = document.getElementById('matchHeader');
 if (matchHeader)
     matchHeader.textContent = `${teamA.name} vs ${teamB.name}`;
-const player1 = activePlayers.find(p => p.id === 5);
-const player2 = activePlayers.find(p => p.id === 23);
-const player3 = activePlayers.find(p => p.id === 14);
-const player4 = activePlayers.find(p => p.id === 2);
-const player5 = activePlayers.find(p => p.id === 4);
-if (player1 && player2 && player3 && player4 && player5) {
-    teamA.addPlayer(player1);
-    teamB.addPlayer(player1);
-    teamA.addPlayer(player2);
-    teamB.addPlayer(player2);
-    teamA.addPlayer(player3);
-    teamB.addPlayer(player3);
-    teamA.addPlayer(player4);
-    teamB.addPlayer(player4);
-    teamA.addPlayer(player5);
-    teamB.addPlayer(player5);
-}
 if (teamAnameInp && teamAhead) {
     teamAnameInp.addEventListener(`keydown`, (event) => {
         if (event.key === `Enter`) {
@@ -267,5 +250,26 @@ const simRes = document.querySelector('.simulate-res');
 if (simBtn && simRes) {
     simBtn.addEventListener('click', () => {
         simRes.innerHTML = simulateMatch(teamA, teamB);
+    });
+}
+// Funkcionalita tlačítek pro smazání všech hráčů v týmu
+const clearBtnA = document.getElementById('clearTeamA');
+const clearBtnB = document.getElementById('clearTeamB');
+if (clearBtnA) {
+    clearBtnA.addEventListener('click', () => {
+        teamA.clearTeam();
+        loadTeamRoster();
+        loadPlayerList();
+        loadTeamStats();
+        weaknessList();
+    });
+}
+if (clearBtnB) {
+    clearBtnB.addEventListener('click', () => {
+        teamB.clearTeam();
+        loadTeamRoster();
+        loadPlayerList();
+        loadTeamStats();
+        weaknessList();
     });
 }
