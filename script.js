@@ -258,10 +258,10 @@ export function simulateMatch(homeTeam, awayTeam) {
     // VYHODNOCENÍ
     output += `<h3 style="color: #F77F00; margin-top: 15px;">RESULT</h3>`;
     if (homeMatchupPoints > awayMatchupPoints) {
-        output += `<p><strong>Winner: <span style="color: #0ff162;">${homeTeam.name}</span></strong> (Matchup score= ${homeMatchupPoints} : ${awayMatchupPoints})</p>`;
+        output += `<p id="winnerTXT"><strong>Winner: <span style="color: #0ff162;">${homeTeam.name}</span id="winnerNAME"></strong> (Matchup score= ${homeMatchupPoints} : ${awayMatchupPoints})</p>`;
     }
     else if (awayMatchupPoints > homeMatchupPoints) {
-        output += `<p><strong>Winner: <span style="color: #0ff162;">${awayTeam.name}</span></strong> (Matchup score= ${awayMatchupPoints} : ${homeMatchupPoints})</p>`;
+        output += `<p id="winnerTXT"><strong>Winner: <span style="color: #0ff162;">${awayTeam.name}</span id="winnerNAME"></strong> (Matchup score= ${awayMatchupPoints} : ${homeMatchupPoints})</p>`;
     }
     else {
         // Pokud je remíza na matchupy, rozhoduje celkový rating + štěstí

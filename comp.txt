@@ -15,7 +15,6 @@ Here are the RGB conversions for the hex codes in your image:
 
     #EAE2B7: rgb(234, 226, 183)
 
-kdyz je salary vetsi tak to stejne jde spustit
 velikost textu kdyz vysledek neni remiza
 Clear simulace funkce
 
