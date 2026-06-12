@@ -549,7 +549,7 @@ footer p:hover {
         justify-content: center;
   
     }
-
+}
 @media screen and (max-width: 600px) {
     .slot {
         height: auto;
