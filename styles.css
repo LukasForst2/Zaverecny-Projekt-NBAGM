@@ -445,3 +445,126 @@ footer p {
 footer p:hover {
     opacity: 0.9;
 }
+
+/* Responzivní design pro mobily a tablety */
+@media screen and (max-width: 1024px) {
+    .matchup {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+    .team-column, .center-block {
+        width: 95%;
+        max-width: 600px;
+        margin-bottom: 2rem;
+    }
+    .center-block {
+        order: -1; /* Posune středový panel (hledání a simulace) úplně nahoru */
+    }
+    #playerListUl li {
+        grid-template-columns: 1fr 1fr 1fr 1fr auto;
+        gap: 10px;
+        text-align: left;
+        font-size: 0.65rem;
+    }
+    .add-btn {
+        justify-content: center;
+        gap: 4px;
+    }
+    .add-btn button {
+        padding: 4px 8px;
+        background-color: rgb(252, 191, 73);
+        color: rgba(0, 48, 73, 1);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 555;
+        font-size: 0.55rem;
+        margin: 0;
+    }
+    .add-btn button:hover {
+
+        background-color: rgb(234, 226, 183);
+        color: rgba(0, 48, 73, 1);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 555;
+    }
+    .filters {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .team-stats, .weakness-card {
+        height: auto;
+        min-height: 300px;
+    }
+    .title {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+    }
+
+    .simulate-res {
+        padding: 0;
+    }
+    .simulate-res h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+    .simulate-res li {
+        margin: 0;
+        font-size: 0.6rem;
+    }
+    .simulate-res ul span{
+        margin-left: 2rem;
+        font-size: 0.75rem;
+        font-weight: bold;
+    }
+    #winnerTXT {
+        font-size: 1.25rem;
+    }
+    #winnerNAME {
+        font-size: 1.75rem;
+    }
+    .sim-error {
+        color: #D62828;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .weakness-card {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .weaknesses-list {
+        font-size: 1rem;
+        padding: 15px 35px 15px 35px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+  
+    }
+
+@media screen and (max-width: 600px) {
+    .slot {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+    .remove-btn {
+        width: 100%;
+    }
+    #playerListUl li {
+        grid-template-columns: 0.5fr 0.5fr  0.5fr 0.5fr auto;
+    }
+    .add-btn {
+        grid-column: span 1;
+    }
+}
